@@ -1,0 +1,19 @@
+services:
+  frontend-onestar3gram:
+    build: .
+    container_name: frontend-onestar3gram
+    ports:
+      - "4200"
+    networks:
+      - app
+    volumes:
+      - .:/app
+      - onestar3gram-frontend-node-modules:/app/node_modules
+
+networks:
+  app:
+    external: true
+    name: keycloak
+
+volumes:
+  onestar3gram-frontend-node-modules:
