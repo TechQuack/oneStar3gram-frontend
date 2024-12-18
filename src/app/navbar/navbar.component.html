@@ -1,15 +1,15 @@
 <div class="navBar">
-  <p>OneStar3gram</p>
-  <div>
-    <button>Login</button>
+  <div id="navigation" routerLink="/">
+    <img src="assets/logo.svg" alt="logo"/>
+    <p id="appName">OneStar3gram</p>
   </div>
-  <div>
-    <button>Register</button>
-  </div>
-  <div>
-    <button>Profile</button>
-  </div>
-  <div>
-    <button>Disconnect</button>
+  <div id="profile">
+    @if (true) {
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+    } @else {
+      <img src="assets/profile.svg" alt="profile" />
+      <img src="assets/disconnect.svg" alt="disconnect" />
+    }
   </div>
 </div>
