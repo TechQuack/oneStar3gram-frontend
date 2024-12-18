@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-navbar',
   imports: [],
   templateUrl: './navbar.component.html',
+  standalone: true,
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
