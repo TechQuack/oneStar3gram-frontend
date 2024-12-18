@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { KeycloakBearerInterceptor, KeycloakService } from 'keycloak-angular';
 
 import { routes } from './app.routes';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +15,9 @@ export const appConfig: ApplicationConfig = {
       multi: true,
       deps: [KeycloakService]
     },
+    provideHttpClient(
+      withInterceptorsFromDi()
+    ),
     KeycloakService,
     {
       provide: HTTP_INTERCEPTORS,
@@ -36,6 +39,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
         checkLoginIframe: false,
         onLoad: 'login-required', // 'login-required' , 'check-sso'
       },
-      enableBearerInterceptor: true
+      enableBearerInterceptor: true,
+      bearerPrefix: 'Bearer'
     });
 }
