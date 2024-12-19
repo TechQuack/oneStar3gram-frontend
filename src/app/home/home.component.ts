@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { PostComponent } from '../post/post.component';
+import { FeedComponent } from "../feed/feed.component";
 
 @Component({
   selector: 'app-home',
-  imports: [PostComponent],
+  imports: [FeedComponent],
   templateUrl: './home.component.html',
   standalone: true,
   styleUrl: './home.component.scss'

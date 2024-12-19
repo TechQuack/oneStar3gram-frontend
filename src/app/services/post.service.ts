@@ -17,7 +17,7 @@ export class PostService {
     }
 
     getPosts(): Observable<Post[]> {
-        return this.http.get<Post[]>(`${this.apiUrl}/`);
+        return this.http.get<Post[]>(`${this.apiUrl}`);
     }
 
     editPost(postId: number, alt: string | null, description: string | null, visibility: boolean | null): Observable<Post> {
