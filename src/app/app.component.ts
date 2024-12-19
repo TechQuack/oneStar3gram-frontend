@@ -1,3 +1,4 @@
+import { KeycloakProfile } from './../../node_modules/keycloak-js/lib/keycloak.d';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {NavbarComponent} from './navbar/navbar.component';
@@ -11,4 +12,6 @@ import {NavbarComponent} from './navbar/navbar.component';
 })
 export class AppComponent {
   title = 'OneStar3gram-front';
+  public isLogged = false;
+  public user : KeycloakProfile | null = null;
 }
