@@ -1,0 +1,45 @@
+:host {
+    display: flex;
+    align-items: center;
+}
+.post {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #D4D4A5;
+    video, img {
+        width: 30%;
+    }
+
+    .description {
+        width: 30%;
+    }
+
+    .post-profile {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 50%;
+        img {
+            width: 7%;
+        }
+    }
+    .post-metadata {
+        display: flex;
+        flex-direction: row;
+        width: 50%;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            width: 10%;
+        }
+        .likes, .comments {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

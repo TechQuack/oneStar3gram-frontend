@@ -1,5 +1,25 @@
 @if(post != null) {
-    <div>
-        <p>{{post.description}}</p>
+    <div class="post">
+        <div class="post-profile">
+            <img src="assets/profile.svg">
+            {{post.creator.username}}
+        </div>
+        @if(post.media.video) {
+            <video controls src="https://proxy-onestar3gram:8081/uploads/{{post.media.generatedName}}"></video>
+        }
+        @else {
+            <img src="https://proxy-onestar3gram:8081/uploads/{{post.media.generatedName}}" />
+        }
+        <div class="post-metadata">
+            <div class="likes">
+                <img src="assets/like.svg">
+                {{post.likes}}
+            </div>
+            <div class="comments">
+                <img src="assets/comment.svg">
+                {{post.comments.length}}
+            </div>
+        </div>
+        <span class="description">{{post.description}}</span>
     </div>
 }
