@@ -1,0 +1,25 @@
+.profile {
+  background-color: #99B8A9;
+}
+
+.block {
+  display: inline-block;
+}
+
+.info {
+  margin-left: 1em;
+}
+
+.update {
+  float: right;
+  margin-right: 1em;
+}
+
+a.button {
+  padding: 1px 6px;
+  border: 1px outset buttonborder;
+  border-radius: 3px;
+  color: buttontext;
+  background-color: buttonface;
+  text-decoration: none;
+}
