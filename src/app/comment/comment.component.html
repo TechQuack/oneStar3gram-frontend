@@ -1,0 +1,19 @@
+<div class="comment">
+  <div class="header">
+    <div class="origin">
+      <div class="author">
+        {{comment?.appUser?.username}}
+      </div>
+      <div class="date">
+        {{comment?.postDate?.getDay}}/{{comment?.postDate?.getMonth}}/{{comment?.postDate?.getFullYear}}
+      </div>
+    </div>
+    <div class="icon">
+      <button (click)="removeComment()">Supprimer</button>
+      <button (click)="toggleLike()"><img src="assets/like.svg" width="30" alt="Bouton de j'aime"/></button>
+    </div>
+  </div>
+  <div class="content">
+    {{comment?.value}}
+  </div>
+</div>
