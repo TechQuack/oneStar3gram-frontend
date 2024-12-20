@@ -26,4 +26,8 @@ export class ProfileComponent implements OnInit{
     this.lastName = user.lastName;
   }
 
+  async disconnect(): Promise<void> {
+    await this.keycloakService.logout();
+  }
+
 }
