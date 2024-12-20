@@ -1,2 +1,2 @@
-<app-navbar></app-navbar>
+<app-navbar [isLogged]="isLogged" [user]="user" (profile)="loadProfile()"></app-navbar>
 <router-outlet/>
