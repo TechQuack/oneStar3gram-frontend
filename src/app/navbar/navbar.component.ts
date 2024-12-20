@@ -1,18 +1,35 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
+import { CommonModule } from '@angular/common';
+import { KeycloakProfile } from 'keycloak-js';
 
 @Component({
   selector: 'app-navbar',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './navbar.component.html',
   standalone: true,
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  // TODO - récupération de l'information de connexion
+  @Input({
+    required: true
+  }) isLogged : boolean = false;
 
-  constructor (private readonly keycloak : KeycloakService) {
 
+  @Input({
+    required: true
+  }) user : KeycloakProfile | null = null;
+
+  @Output() profile = new EventEmitter<void>();
+
+  constructor (private readonly keycloak : KeycloakService) {}
+
+  public async ngOnInit() {
+    this.isLogged = await this.keycloak.isLoggedIn();
+
+    if (this.isLogged) {
+      this.user = await this.keycloak.loadUserProfile();
+    }
   }
 
   public login() {
@@ -28,6 +45,6 @@ export class NavbarComponent {
   }
 
   public profil() {
-    // TODO renvoyer un flag d'affichage de la page de profil
+    this.profile.emit();
   }
 }
