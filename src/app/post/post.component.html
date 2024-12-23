@@ -15,6 +15,11 @@
                 <img src="assets/like.svg">
                 {{post.likes}}
             </div>
+            @if (isAdmin) {
+              <div>
+                <button type="button" (click)="deletePost()">delete</button>
+              </div>
+            }
             <div class="comments">
                 <img src="assets/comment.svg">
                 {{post.comments.length}}
