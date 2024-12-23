@@ -16,8 +16,8 @@ import {Router} from '@angular/router';
 export class AddContentComponent {
   postForm: FormGroup = new FormGroup({
     isVideo: new FormControl(false),
-    video: new FormControl(null),
-    image: new FormControl(null),
+    video: new FormControl(null, Validators.required),
+    image: new FormControl(null, Validators.required),
     alt: new FormControl('', Validators.maxLength(200)),
     description: new FormControl('', Validators.maxLength(500)),
     IsPrivate: new FormControl(true)
@@ -27,7 +27,6 @@ export class AddContentComponent {
 
   onSubmit() {
     if (this.postForm.invalid) {
-      //TODO: display error to user
       return;
     }
     let mediaId: number = 0;
