@@ -1,3 +1,5 @@
+import {RouterLink} from '@angular/router';
+import {NgOptimizedImage} from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { CommonModule } from '@angular/common';
@@ -5,7 +7,11 @@ import { KeycloakProfile } from 'keycloak-js';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule],
+  imports: [
+    RouterLink,
+    NgOptimizedImage,
+    CommonModule
+  ],
   templateUrl: './navbar.component.html',
   standalone: true,
   styleUrl: './navbar.component.scss'
@@ -44,7 +50,7 @@ export class NavbarComponent {
     this.keycloak.register();
   }
 
-  public profil() {
+  public profile() {
     this.profile.emit();
   }
 }
