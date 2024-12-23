@@ -3,6 +3,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {MediaFileService} from '../services/media-file.service';
 import {PostService} from '../services/post.service';
 import {Router} from '@angular/router';
+import {KeycloakService} from 'keycloak-angular';
 
 @Component({
   selector: 'app-add-content',
@@ -23,7 +24,17 @@ export class AddContentComponent {
     IsPrivate: new FormControl(true)
   });
 
-  constructor(private mediaService: MediaFileService, private postService: PostService, private router: Router) {}
+  constructor(private mediaService: MediaFileService,
+              private postService: PostService,
+              private router: Router,
+              private keycloakService: KeycloakService) {}
+
+  ngOnInit() {
+    const isAdmin: boolean = this.keycloakService.getUserRoles().includes('Admin');
+    if (!isAdmin) {
+      this.router.navigate([""]);
+    }
+  }
 
   onSubmit() {
     if (this.postForm.invalid) {
@@ -41,6 +52,6 @@ export class AddContentComponent {
       this.mediaService.uploadImage(file).subscribe(mediaFile => mediaId = mediaFile.id);
     }
     this.postService.sendPost(mediaId, alt, description, IsPrivate);
-    this.router.navigate(['/']);
+    this.router.navigate([""]);
   }
 }
