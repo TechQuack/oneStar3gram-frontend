@@ -2,7 +2,7 @@
     <div class="post">
         <div class="post-profile">
             <img src="assets/profile.svg">
-            {{post.creator.username}}
+            {{post.creator}}
         </div>
         @if(post.media.video) {
             <video controls src="https://proxy-onestar3gram:8081/uploads/{{post.media.generatedName}}"></video>
@@ -13,7 +13,7 @@
         <div class="post-metadata">
             <div class="likes">
                 <img src="assets/like.svg">
-                {{post.likes}}
+                {{post.likers.length}}
             </div>
             @if (isAdmin) {
               <div>
