@@ -1,0 +1,27 @@
+<p>Add a post</p>
+<form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+  <div>
+    <input type="radio" id="video" formControlName="isVideo" [value]="true">
+    <label for="video">Video</label>
+  </div>
+  <div>
+    <input type="radio" id="image" formControlName="isVideo" [value]="false">
+    <label for="image">Image</label>
+  </div>
+  @if (postForm.controls['isVideo'].value) {
+    <label for="media">Select video file</label>
+    <input type="file" id="media" formControlName="video" accept="video/*" required>
+  } @else {
+    <label for="media">Select image file</label>
+    <input type="file" formControlName="image" accept="image/*" required>
+    <label for="alt">Alternative text</label>
+    <input type="text" id="alt" formControlName="alt">
+  }
+  <label for="description">Description</label>
+  <input type="text" id="description" formControlName="description">
+  <input type="radio" id="public" formControlName="isPrivate" [value]="false">
+  <label for="public">Public</label>
+  <input type="radio" id="private" formControlName="isPrivate" [value]="true">
+  <label for="private">Private</label>
+  <input type="submit" value="Send post">
+</form>
