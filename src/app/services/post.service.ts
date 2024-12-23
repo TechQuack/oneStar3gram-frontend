@@ -28,8 +28,14 @@ export class PostService {
         return this.http.put<Post>(`${this.apiUrl}/edit/${postId}`, { params : params}) //TODO
     }
 
-    sendPost(postId: number, alt: string, description: string, visibility: boolean, mediaFileId: number): Observable<number> {
-        return this.http.post<number>(`${this.apiUrl}/send`, {}) //TODO
+    sendPost(mediaFileId: number, alt: string, description: string, visibility: boolean): Observable<number> {
+        const body = JSON.stringify({
+          mediaFileId: mediaFileId,
+          alt: alt,
+          description: description,
+          visibility: visibility
+        });
+        return this.http.post<number>(`${this.apiUrl}/send`, body);
     }
 
     deletePost(postId: number): Observable<void> {
