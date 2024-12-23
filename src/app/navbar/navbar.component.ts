@@ -26,7 +26,7 @@ export class NavbarComponent {
     required: true
   }) user : KeycloakProfile | null = null;
 
-  @Output() profile = new EventEmitter<void>();
+  @Output() profileEvent = new EventEmitter<void>();
 
   constructor (private readonly keycloak : KeycloakService) {}
 
@@ -51,6 +51,6 @@ export class NavbarComponent {
   }
 
   public profile() {
-    this.profile.emit();
+    this.profileEvent.emit();
   }
 }
