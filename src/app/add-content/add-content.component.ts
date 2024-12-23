@@ -17,11 +17,10 @@ import {KeycloakService} from 'keycloak-angular';
 export class AddContentComponent {
   postForm: FormGroup = new FormGroup({
     isVideo: new FormControl(false),
-    video: new FormControl(null, Validators.required),
-    image: new FormControl(null, Validators.required),
+    media: new FormControl(null, Validators.required),
     alt: new FormControl('', Validators.maxLength(200)),
     description: new FormControl('', Validators.maxLength(500)),
-    IsPrivate: new FormControl(true)
+    IsPrivate: new FormControl(false, Validators.required)
   });
 
   constructor(private mediaService: MediaFileService,
@@ -44,12 +43,11 @@ export class AddContentComponent {
     const alt: string = this.postForm.controls['alt'].value;
     const description: string = this.postForm.controls['description'].value;
     const IsPrivate: boolean = this.postForm.controls['IsPrivate'].value;
+    const media = this.postForm.controls['media'].value;
     if (this.postForm.controls['isVideo'].value) {
-      const file: File = this.postForm.controls['video'].value;
-      this.mediaService.uploadVideo(file).subscribe(mediaFile => mediaId = mediaFile.id);
+      this.mediaService.uploadVideo(media).subscribe(mediaFile => mediaId = mediaFile.id);
     } else {
-      const file: File = this.postForm.controls['image'].value;
-      this.mediaService.uploadImage(file).subscribe(mediaFile => mediaId = mediaFile.id);
+      this.mediaService.uploadImage(media).subscribe(mediaFile => mediaId = mediaFile.id);
     }
     this.postService.sendPost(mediaId, alt, description, IsPrivate);
     this.router.navigate([""]);
