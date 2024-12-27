@@ -5,4 +5,5 @@ import {AddContentComponent} from './add-content/add-content.component';
 export const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'add', component: AddContentComponent},
+  {path: 'edit/:id', component: AddContentComponent},
 ];

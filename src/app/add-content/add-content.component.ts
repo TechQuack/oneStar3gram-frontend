@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MediaFileService} from '../services/media-file.service';
 import {PostService} from '../services/post.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {KeycloakService} from 'keycloak-angular';
 
 @Component({
@@ -23,16 +23,24 @@ export class AddContentComponent {
     isPrivate: new FormControl(false, Validators.required)
   });
 
+  id: number = 0;
+
   constructor(private mediaService: MediaFileService,
               private postService: PostService,
               private router: Router,
-              private keycloakService: KeycloakService) {}
+              private keycloakService: KeycloakService,
+              private route: ActivatedRoute) {}
 
   ngOnInit() {
     const isAdmin: boolean = this.keycloakService.getUserRoles().includes('Admin');
     if (!isAdmin) {
       this.router.navigate([""]);
     }
+    this.route.params.subscribe(params => {
+      if (params['id'] !== undefined) {
+        this.id = +params['id'];
+      }
+    })
   }
 
   onPickedMedia(event: Event) {
