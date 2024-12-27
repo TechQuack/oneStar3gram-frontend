@@ -2,20 +2,29 @@ import { Injectable } from '@angular/core';
 import { Post } from '../entities/post.entity';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { PostComment } from '../entities/comment.entity';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CommentService {
-    private apiUrlComment = environment.apiUrl + 'comments'
-    private apiUrlPost = environment.apiUrl + 'posts'
+    private apiUrlComment = environment.apiUrl + 'comment'
+    private apiUrlPost = environment.apiUrl + 'post'
 
     constructor(private http: HttpClient) { }
 
     getComment(id: number): Observable<PostComment> {
-      return this.http.get<PostComment>(`${this.apiUrlComment}/${id}`);
+      return this.http.get<PostComment>(`${this.apiUrlComment}/${id}`).pipe(
+        map( response => ({
+          id: response.id,
+          author: response.author,
+          value: response.value,
+          postDate: new Date(response.postDate),
+          likers: response.likers
+        }),
+        )
+      );
     }
 
     getPostComments(id: number): Observable<PostComment[]> {
@@ -37,10 +46,6 @@ export class CommentService {
     putLikeComment(id : number): Observable<PostComment> {
       return this.http.put<PostComment>(`${this.apiUrlComment}/${id}/like`, {})
     }
-
-    // putUnlikeComment(id : number): Observable<PostComment> {
-    //   return this.http.put<PostComment>(`${this.apiUrlComment}/${id}/unlike`, {})
-    // }
 
     deleteComment(id : number): Observable<PostComment> {
       return this.http.delete<PostComment>(`${this.apiUrlComment}/${id}`, {})

@@ -2,12 +2,12 @@
   <div class="header">
     <div class="origin">
       <span class="author">
-        <img src="assets/profile.svg" alt="Image représentant l'utilisateur"/>
+        <img src="assets/profile.svg" alt="Profile picture"/>
         <p>{{comment?.author}}</p>
       </span>
       <span class="date">
-        Publiée le
-        {{comment?.postDate?.getDay}}/{{comment?.postDate?.getMonth}}/{{comment?.postDate?.getFullYear}}
+        Published on :
+        {{comment?.postDate?.getDay()}}/{{comment?.postDate?.getMonth()}}/{{comment?.postDate?.getFullYear()}}
       </span>
     </div>
   </div>
@@ -16,8 +16,8 @@
       {{comment?.value}}
     </div>
     <div class="icon">
-      <button (click)="removeComment()"><img src="assets/remove.svg" alt="Bouton de suppression"/></button>
-      <button (click)="toggleLike()"><img src="assets/like.svg" alt="Bouton de j'aime"/></button>
+      <button (click)="removeComment()"><img src="assets/remove.svg" alt="Delete button"/></button>
+      <button (click)="toggleLike()"><img src="assets/like.svg" alt="Like button"/></button>
     </div>
   </div>
 </div>
