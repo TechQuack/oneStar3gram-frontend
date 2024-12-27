@@ -1,4 +1,4 @@
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { CommonModule } from '@angular/common';
@@ -26,14 +26,20 @@ export class NavbarComponent {
 
   @Output() profileEvent = new EventEmitter<void>();
 
-  constructor (private readonly keycloak : KeycloakService) {}
+  isAdmin: boolean = false;
 
-  public async ngOnInit() {
-    this.isLogged = await this.keycloak.isLoggedIn();
+  constructor (private readonly keycloak : KeycloakService, private router: Router) {}
 
+  async ngOnInit() {
+    this.isLogged = this.keycloak.isLoggedIn();
+    this.isAdmin = this.keycloak.getUserRoles().includes("Admin");
     if (this.isLogged) {
       this.user = await this.keycloak.loadUserProfile();
     }
+  }
+
+  isOnPage(page:String) {
+    return this.router.url == page;
   }
 
   public login() {

@@ -21,6 +21,10 @@
   padding-left: 0.5rem;
 }
 
+#navigation:hover {
+  cursor: pointer;
+}
+
 #navigation,
 #profile {
   display: flex;
