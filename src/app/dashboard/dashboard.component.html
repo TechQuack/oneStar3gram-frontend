@@ -1,31 +1,29 @@
-<div class="upper-dashboard">
-    <div class="box">
-        @if (videos.length == 0 && images.length == 0) {
-            <b class="no-data">No data</b>
-        }
-        <canvas id="MediaStat"></canvas>
-    </div>
-    <div class="box">
-        @if (posts.length == 0) {
-            <b class="no-data">No data</b>
-        }
-        <canvas id="PostStat"></canvas>
-    </div>
-  <div class="box">
+<div class="dashboard">
+  <div class="media-box box">
+      @if (videos.length == 0 && images.length == 0) {
+          <b class="no-data">No data</b>
+      }
+      <canvas id="MediaStat"></canvas>
+  </div>
+  <div class="post-box box">
+      @if (posts.length == 0) {
+          <b class="no-data">No data</b>
+      }
+      <canvas id="PostStat"></canvas>
+  </div>
+  <div class="user-stat-box box">
     @if (users.length == 0) {
       <b class="no-data">No data</b>
     }
     <canvas id="UserStat"></canvas>
   </div>
-</div>
-<div class="lower-dashboard">
-    <div class="box">
+  <div class="image-box box">
 
-    </div>
-    <div class="box">
+  </div>
+  <div class="video-box box">
 
-    </div>
-    <div class="box">
-      <app-user-list></app-user-list>
-    </div>
+  </div>
+  <div class="user-manage-box box">
+    <app-user-list></app-user-list>
+  </div>
 </div>

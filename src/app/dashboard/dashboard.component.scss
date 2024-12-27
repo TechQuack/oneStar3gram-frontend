@@ -1,18 +1,23 @@
-.upper-dashboard, .lower-dashboard {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 2rem;
-    height: 50%;
+.dashboard {
+    display: grid;
+    gap: 5%;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    box-sizing: border-box;
+    padding: 1%;
 }
 
 .box {
-    width: 25%;
     background-color: #72A1B4;
     border-radius: 10%;
-    padding: 2rem;
+    padding: 1rem;
     position: relative;
+    display: flex;
+    justify-content: center;
 }
+
 .no-data {
     text-align: center;
     width: 100%;
@@ -21,4 +26,41 @@
     left: 0;
     top: 45%;
     font-size: 3rem;
+}
+
+:host {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
+.media-box {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.post-box {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.user-stat-box {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+.image-box {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.video-box {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.user-manage-box {
+    grid-column: 3;
+    grid-row: 2;
 }
