@@ -23,8 +23,10 @@ export class UserService {
     return this.http.get<User[]>(environment.keycloakUrl + 'users', {headers});
   }
 
-  hasRole(role: string): boolean {
-      return this.keycloakService.isUserInRole(role)
+  hasRole(userId: number, role: string): Observable<boolean> {
+    return this.getUserRole(userId).pipe(
+      map(userRole => userRole === role)
+    );
   }
 
   changeRole(userId: number, role: string): Observable<object> {

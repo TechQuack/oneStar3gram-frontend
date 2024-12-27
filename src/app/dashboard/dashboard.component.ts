@@ -8,6 +8,7 @@ import {Chart} from 'chart.js/auto';
 import {User} from '../entities/user.entity';
 import {UserService} from '../services/user.service';
 import {UserListComponent} from '../user-list/user-list.component';
+import {forkJoin, map} from 'rxjs';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -53,19 +54,30 @@ export class DashboardComponent {
       this.mediaChart?.update()
     })
 
-     this.userService.getUsers().subscribe(users => {
-      this.users = users
-      const self = this
-      this.userChart!.data.datasets[0].data[0] = users.filter(function() {
-        return self.userService.hasRole("Admin")
-      }).length;
-      this.userChart!.data.datasets[0].data[1] = users.filter(function() {
-        return self.userService.hasRole("Privileged") && !self.userService.hasRole("Admin")
-      }).length;
-      this.userChart!.data.datasets[0].data[2] = users.length -
-        this.userChart!.data.datasets[0].data[1] - this.userChart!.data.datasets[0].data[0]
-      this.postChart?.update()
-    })
+    this.userService.getUsers().subscribe(users => {
+      this.users = users;
+
+      const roleObservables = users.map(user => {
+        return forkJoin([
+          this.userService.hasRole(user.id, 'Admin'),
+          this.userService.hasRole(user.id, 'Privileged')
+        ]).pipe(
+          map(([isAdmin, isPrivileged]) => ({ user, isAdmin, isPrivileged }))
+        );
+      });
+
+      forkJoin(roleObservables).subscribe(results => {
+        const adminCount = results.filter(result => result.isAdmin).length;
+        const privilegedCount = results.filter(result => result.isPrivileged).length;
+        const normalCount = users.length - adminCount - privilegedCount;
+
+        this.userChart!.data.datasets[0].data[0] = adminCount;
+        this.userChart!.data.datasets[0].data[1] = privilegedCount;
+        this.userChart!.data.datasets[0].data[2] = normalCount;
+
+        this.userChart?.update();
+      });
+    });
   }
 
   createCharts(){
