@@ -1,4 +1,2 @@
-<app-navbar></app-navbar>
-<div class="content">
-  <router-outlet/>
-</div>
+<app-navbar [isLogged]="isLogged" [user]="user" (profile)="loadProfile()"></app-navbar>
+<router-outlet/>

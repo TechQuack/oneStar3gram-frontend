@@ -38,7 +38,7 @@ export class DashboardComponent {
     this.createCharts()
     this.postService.getPosts().subscribe(posts => {
       this.posts = posts
-      var numberOfPrivatePosts = posts.filter(post => post.private).length
+      var numberOfPrivatePosts = posts.filter(post => post.isPrivate).length
       this.postChart!.data.datasets[0].data[0] = posts.length - numberOfPrivatePosts
       this.postChart!.data.datasets[0].data[1] = numberOfPrivatePosts
       this.postChart?.update()
