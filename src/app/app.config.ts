@@ -37,7 +37,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       },
       initOptions: {
         checkLoginIframe: false,
-        onLoad: 'login-required', // 'login-required' , 'check-sso'
+        onLoad: 'check-sso', // 'login-required' , 'check-sso'
       },
       enableBearerInterceptor: true,
       bearerPrefix: 'Bearer'
