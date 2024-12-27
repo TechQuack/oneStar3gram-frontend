@@ -22,6 +22,7 @@ export class FormCommentComponent {
   constructor (readonly commentService : CommentService) { }
 
   submit() {
-    this.commentService.putComment(this.idPost, this.commentForm.value.value).subscribe(c => this.comment = c);
+    this.commentService.postComment(this.idPost, this.commentForm.value.value).subscribe(c => this.comment = c);
+    window.location.reload()
   }
 }

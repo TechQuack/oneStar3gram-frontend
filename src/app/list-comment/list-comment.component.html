@@ -1,1 +1,3 @@
-<app-comment *ngFor = "let c of comments" [id]="c.id"></app-comment>
+@for(comment of comments; track $index) {
+    <app-comment [id]="comment.id"></app-comment>
+}

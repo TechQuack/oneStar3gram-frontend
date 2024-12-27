@@ -36,7 +36,7 @@ export class CommentService {
     }
 
     postComment(id : number, value : string): Observable<PostComment> {
-      return this.http.post<PostComment>(`${this.apiUrlPost}/${id}/value/${value}`, {})
+      return this.http.post<PostComment>(`${this.apiUrlPost}/${id}/comments/value`, value)
     }
 
     putComment(id : number, value : string): Observable<PostComment> {

@@ -1,9 +1,9 @@
 <div id="form">
   <form [formGroup]="commentForm" (ngSubmit)="submit()">
-    <div class="form-group">
-        <input id="value" autocomplete="off" placeholder="Quoi de neuf ?" type="text" class="form-control" formControlName="value">
-    </div>
-    <button type="submit" class="btn btn-primary">Envoyer</button>
+    <input id="value" autocomplete="off" placeholder="What's new ?" type="text" formControlName="value">
+    <span id="submit">
+      <button type="submit" id="submit-button">Submit</button>
+    </span>
   </form>
 </div>
 

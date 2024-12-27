@@ -1,23 +1,28 @@
-<div class="comment">
-  <div class="header">
-    <div class="origin">
-      <span class="author">
-        <img src="assets/profile.svg" alt="Profile picture"/>
-        <p>{{comment?.author}}</p>
-      </span>
-      <span class="date">
-        Published on :
-        {{comment?.postDate?.getDay()}}/{{comment?.postDate?.getMonth()}}/{{comment?.postDate?.getFullYear()}}
-      </span>
+@if(comment != null) {
+  <div class="comment">
+    <div class="header">
+      <div class="origin">
+        <span class="author">
+          <img src="assets/profile.svg" alt="Profile picture"/>
+          <p>{{comment.author}}</p>
+        </span>
+        <span class="date">
+          Published on :
+          {{comment.postDate.getDate()}}/{{comment.postDate.getMonth() + 1}}/{{comment.postDate.getFullYear()}} {{comment.postDate.getHours()}}:{{comment.postDate.getMinutes()}}
+        </span>
+      </div>
+    </div>
+    <div class="body">
+      <div class="content">
+        {{comment.value}}
+      </div>
+      <div class="icon">
+        <a (click)="toggleLike()" class="likes">
+          <img src="assets/like.svg" alt="Like button"/>
+          {{comment.likers.length}}
+        </a>
+        <a (click)="removeComment()" class="delete"><img src="assets/remove.svg" alt="Delete button"/></a>
+      </div>
     </div>
   </div>
-  <div class="body">
-    <div class="content">
-      {{comment?.value}}
-    </div>
-    <div class="icon">
-      <button (click)="removeComment()"><img src="assets/remove.svg" alt="Delete button"/></button>
-      <button (click)="toggleLike()"><img src="assets/like.svg" alt="Like button"/></button>
-    </div>
-  </div>
-</div>
+}

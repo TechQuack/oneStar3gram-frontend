@@ -15,10 +15,10 @@
 .author {
   font-weight: bold;
   display: flex;
-}
 
-.author img {
-  margin-right: 2px;
+  img {
+    margin-right: 2px;
+  }
 }
 
 div.date {
@@ -41,7 +41,6 @@ div.date {
 
 .body {
   display: flex;
-  justify-content: space-around;
 }
 
 .content {
@@ -49,17 +48,28 @@ div.date {
 }
 
 .icon {
-  margin: auto;
-}
-
-.icon button {
   display: flex;
-  justify-content: center;
-  background-color: none;
-  color: black;
-  border: 2px solid #1796A4;
-  margin: 2px;
-  cursor: pointer;
+  justify-content: end;
+  width: 30%;
+  a {
+    display: flex;
+    justify-content: center;
+    background-color: none;
+    margin: 2px;
+    cursor: pointer;
+  }
+
+  .likes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+  }
+
+  .delete {
+    justify-content: end;
+  }
 }
 
 img {
