@@ -7,10 +7,13 @@ import { MediaFile } from '../entities/media-file.entity';
 import {Chart} from 'chart.js/auto';
 import {User} from '../entities/user.entity';
 import {UserService} from '../services/user.service';
+import {UserListComponent} from '../user-list/user-list.component';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [],
+  imports: [
+    UserListComponent
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
