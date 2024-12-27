@@ -9,15 +9,19 @@ import {Observable} from 'rxjs';
 })
 
 export class MediaFileService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl: string = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
   uploadImage(file: File): Observable<MediaFile> {
-    return this.http.post<MediaFile>(`${this.apiUrl}image/upload`, file);
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<MediaFile>(`${this.apiUrl}image/upload`, formData);
   }
 
   uploadVideo(file: File): Observable<MediaFile> {
-    return this.http.post<MediaFile>(`${this.apiUrl}video/upload`, file);
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<MediaFile>(`${this.apiUrl}video/upload`, formData);
   }
 }

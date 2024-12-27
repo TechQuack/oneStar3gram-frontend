@@ -10,10 +10,10 @@
   </div>
   @if (postForm.controls['isVideo'].value) {
     <label for="media">Select video file</label>
-    <input type="file" id="media" formControlName="media" accept="video/*">
+    <input type="file" id="media" formControlName="media" accept="video/*"  (change)="onPickedMedia($event)">
   } @else {
     <label for="media">Select image file</label>
-    <input type="file" formControlName="media" accept="image/*">
+    <input type="file" formControlName="media" accept="image/*" (change)="onPickedMedia($event)">
     <label for="alt">Alternative text</label>
     <input type="text" id="alt" formControlName="alt">
   }

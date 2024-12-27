@@ -20,7 +20,7 @@ export class AddContentComponent {
     media: new FormControl(null, Validators.required),
     alt: new FormControl('', Validators.maxLength(200)),
     description: new FormControl('', Validators.maxLength(500)),
-    IsPrivate: new FormControl(false, Validators.required)
+    isPrivate: new FormControl(false, Validators.required)
   });
 
   constructor(private mediaService: MediaFileService,
@@ -35,21 +35,34 @@ export class AddContentComponent {
     }
   }
 
+  onPickedMedia(event: Event) {
+    const element: HTMLInputElement = event.target as HTMLInputElement;
+    if (element.files != null) {
+      const file = element.files[0];
+      this.postForm.patchValue({media: file});
+    }
+  }
+
   onSubmit() {
     if (this.postForm.invalid) {
       return;
     }
-    let mediaId: number = 0;
     const alt: string = this.postForm.controls['alt'].value;
     const description: string = this.postForm.controls['description'].value;
-    const IsPrivate: boolean = this.postForm.controls['IsPrivate'].value;
-    const media = this.postForm.controls['media'].value;
+    const isPrivate: boolean = this.postForm.controls['isPrivate'].value;
+    const media: File = this.postForm.controls['media'].value;
     if (this.postForm.controls['isVideo'].value) {
-      this.mediaService.uploadVideo(media).subscribe(mediaFile => mediaId = mediaFile.id);
+      this.mediaService.uploadVideo(media).subscribe(mediaFile => {
+        this.postService.sendPost(mediaFile.id, alt, description, isPrivate).subscribe(() => {
+          this.router.navigate([""]);
+        });
+      });
     } else {
-      this.mediaService.uploadImage(media).subscribe(mediaFile => mediaId = mediaFile.id);
+      this.mediaService.uploadImage(media).subscribe(mediaFile => {
+        this.postService.sendPost(mediaFile.id, alt, description, isPrivate).subscribe(() => {
+          this.router.navigate([""]);
+        });
+      });
     }
-    this.postService.sendPost(mediaId, alt, description, IsPrivate);
-    this.router.navigate([""]);
   }
 }
