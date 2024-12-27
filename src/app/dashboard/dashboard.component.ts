@@ -9,6 +9,8 @@ import {User} from '../entities/user.entity';
 import {UserService} from '../services/user.service';
 import {UserListComponent} from '../user-list/user-list.component';
 import {forkJoin, map} from 'rxjs';
+import { FileSizeService } from '../services/file-size.service';
+import { environment } from '../../environments/environment';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -24,18 +26,34 @@ export class DashboardComponent {
   images: MediaFile[] = []
   videos: MediaFile[] = []
   users: User[] = []
+  videosSize: number[] = []
+  imagesSize: number[] = []
+  videosExtension: string[] = []
+  imagesExtension: string[] = []
 
   public mediaChart: Chart<"pie", number[], string> | null = null;
 
   public postChart: Chart<"pie", number[], string> | null = null;
 
+  public videoChart: Chart<"pie", number[], string> | null = null;
+
+  public imageChart: Chart<"pie", number[], string> | null = null;
+
   public userChart: Chart<"pie", number[], string> | null = null;
 
   constructor(private postService: PostService, private videoService: VideoService,
-              private imageService: ImageService, private userService: UserService) {}
+              private imageService: ImageService, private userService: UserService,
+              private fileSizeService: FileSizeService
+            ) {}
 
   async ngOnInit() {
     this.createCharts()
+    this.getPosts()
+    this.getMedias()
+    this.getUsers()
+  }
+
+  getPosts() {
     this.postService.getPosts().subscribe(posts => {
       this.posts = posts
       var numberOfPrivatePosts = posts.filter(post => post.isPrivate).length
@@ -43,17 +61,38 @@ export class DashboardComponent {
       this.postChart!.data.datasets[0].data[1] = numberOfPrivatePosts
       this.postChart?.update()
     })
+  }
+
+  getMedias() {
     this.videoService.getMedias().subscribe(videos => {
       this.videos = videos
+      videos.forEach(media => {
+        this.manageVideoData(media)
+        this.getVideoFileExtension(media.originName)
+      })
+      this.videoChart!.data.labels = [...new Set(this.videosExtension)]
+      this.videoChart!.data.datasets[0].data = this.countElements(this.videosExtension)
+      this.videoChart!.data.datasets[0].backgroundColor = this.getRandomColor(videos.length)
       this.mediaChart!.data.datasets[0].data[1] = videos.length
       this.mediaChart?.update()
+      this.videoChart?.update()
     })
     this.imageService.getMedias().subscribe(images => {
       this.images = images
+      images.forEach(media => {
+        this.manageImageData(media)
+        this.getImageFileExtension(media.originName)
+      })
+      this.imageChart!.data.labels = [...new Set(this.imagesExtension)]
+      this.imageChart!.data.datasets[0].data = this.countElements(this.imagesExtension)
+      this.imageChart!.data.datasets[0].backgroundColor = this.getRandomColor(images.length)
       this.mediaChart!.data.datasets[0].data[0] = images.length
       this.mediaChart?.update()
+      this.imageChart?.update()
     })
+  }
 
+  getUsers() {
     this.userService.getUsers().subscribe(users => {
       this.users = users;
 
@@ -95,7 +134,14 @@ export class DashboardComponent {
         }],
       },
       options: {
-        responsive: true
+        responsive: true,
+        plugins: {
+          legend: {
+            labels: {
+              color: 'black'
+            }
+          }
+        }
       }
     });
 
@@ -113,7 +159,14 @@ export class DashboardComponent {
         }],
       },
       options: {
-        responsive: true
+        responsive: true,
+        plugins: {
+          legend: {
+            labels: {
+              color: 'black'
+            }
+          }
+        }
       }
     });
 
@@ -132,11 +185,129 @@ export class DashboardComponent {
         }],
       },
       options: {
-        responsive: true
+        responsive: true,
+        plugins: {
+          legend: {
+            labels: {
+              color: 'black'
+            }
+          }
+        }
+      }
+    });
+
+    this.imageChart = new Chart("ImageStat", {
+      type: 'pie',
+      data: {
+        labels: [],
+        datasets: [{
+          data: [],
+          hoverOffset: 4
+        }],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            labels: {
+              color: 'black'
+            }
+          }
+        }
+      }
+    });
+
+    this.videoChart = new Chart("VideoStat", {
+      type: 'pie',
+      data: {
+        labels: [],
+        datasets: [{
+          data: [],
+          hoverOffset: 4
+        }],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            labels: {
+              color: 'black'
+            }
+          }
+        }
       }
     });
   }
 
+  manageVideoData(media: MediaFile) {
+    this.fileSizeService.fetchFileSize(environment.apiUrl + "uploads/" + media.generatedName).subscribe(
+      number => this.videosSize.push(number)
+    )
+  }
 
+  manageImageData(media: MediaFile) {
+    this.fileSizeService.fetchFileSize(environment.apiUrl + "uploads/" + media.generatedName).subscribe(
+      number => this.imagesSize.push(number)
+    )
+  }
+
+  getVideoFileExtension(filename: string) {
+    this.videosExtension.push(filename.split('.').pop() ?? "")
+  }
+
+  getImageFileExtension(filename: string) {
+    this.imagesExtension.push(filename.split('.').pop() ?? "")
+  }
+
+  countElements(array: string[]) : number[] {
+    const counts : Record<string, number> = {};
+    array.forEach((el) => {
+      counts[el] = counts[el] ? (counts[el] + 1) : 1;
+    });
+    return Object.values(counts)
+  }
+
+  getRandomColor(count: number): string[] {
+    var arr = [];
+    var colors: string[] = []
+    for (var i = 0; i < count; i++) {
+      var letters = '0123456789ABCDEF'.split('');
+      var color = '#';
+      for (var x = 0; x < 6; x++) {
+          color += letters[Math.floor(Math.random() * 16)];
+      }
+      colors.push(color);
+    }
+    return colors;
+  } 
+
+  getImageMeanSize(): number {
+    if (this.imagesSize.length == 0) {
+      return 0
+    }
+    if (this.imagesSize.length == 1) {
+      return Math.round(this.imagesSize[0] / 1000)
+    }
+    return Math.round(this.sumArray(this.imagesSize) / this.imagesSize.length)
+  }
+
+  getVideoMeanSize(): number {
+    if (this.videosSize.length == 0) {
+      return 0
+    }
+    if (this.videosSize.length == 1) {
+      return Math.round(this.videosSize[0] / 1000)
+    }
+    return Math.round(this.sumArray(this.videosSize) / this.videosSize.length)
+  }
+
+  sumArray(array: number[]) : number {
+    if (array.length == 0) {
+      return 0
+    }
+    return Math.round(array.reduce(function(a, b) {
+      return a + b
+    }) / 1000)
+  }
 
 }
