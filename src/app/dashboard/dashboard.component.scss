@@ -1,18 +1,18 @@
-.upper-dashboard {
+.upper-dashboard, .lower-dashboard {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 2rem;
+    height: 50%;
 }
 
-.media-diagram, .post-diagram, .user-diagram {
+.box {
     width: 25%;
     background-color: #72A1B4;
     border-radius: 10%;
     padding: 2rem;
     position: relative;
 }
-
 .no-data {
     text-align: center;
     width: 100%;
