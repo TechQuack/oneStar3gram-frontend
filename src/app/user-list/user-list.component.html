@@ -1,0 +1,10 @@
+@for(user of users; track user.id) {
+  <div class="user">
+    <li>{{user.username}}</li>
+    <select [(ngModel)]="user.role" name="role" id="role" (change)="changeRole(user.id, $event)">
+      <option value="Admin">Admin</option>
+      <option value="Privileged">Privileged</option>
+      <option value="None">User</option>
+    </select>
+  </div>
+}
