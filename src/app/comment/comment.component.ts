@@ -1,3 +1,4 @@
+import { KeycloakService } from 'keycloak-angular';
 import { PostComment } from '../entities/comment.entity';
 import { CommentService } from './../services/comment.service';
 import { Component, Input } from '@angular/core';
@@ -10,33 +11,24 @@ import { Component, Input } from '@angular/core';
   styleUrl: './comment.component.scss'
 })
 export class CommentComponent {
-  @Input() id: number = 0;
 
-  constructor (readonly commentService : CommentService) {}
+  @Input() comment: PostComment | undefined;
 
-  comment: PostComment | null = null;
+  constructor (private readonly commentService : CommentService, private keycloakService: KeycloakService) {}
 
-  async ngOnInit() {
-    this.commentService.getComment(this.id).subscribe(comment => this.comment = comment)
-  }
-
-  toggleLike() {
-    // si l'utilisateur a deja liker
-    // sinon
-    this.likeComment();
-  }
 
   likeComment() {
-    this.commentService.putLikeComment(this.id);
+    this.commentService.putLikeComment(this.comment!.id).subscribe(comment => this.comment = comment);
+  }
+
+  hasUserLikedComment() {
+    let user = this.keycloakService.getUsername();
+    return this.comment?.likers.find(u => u == user)
   }
 
   removeComment() {
-    this.commentService.deleteComment(this.id);
+    this.commentService.deleteComment(this.comment!.id);
   }
-
-  // unlikeComment() {
-  //   this.commentService.putLikeComment(this.id);
-  // }
 
 }
 
