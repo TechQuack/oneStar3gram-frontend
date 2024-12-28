@@ -1,5 +1,5 @@
 import {RouterLink} from '@angular/router';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { CommonModule } from '@angular/common';
 import { KeycloakProfile } from 'keycloak-js';
@@ -24,8 +24,6 @@ export class NavbarComponent {
     required: true
   }) user : KeycloakProfile | null = null;
 
-  @Output() profileEvent = new EventEmitter<void>();
-
   constructor (private readonly keycloak : KeycloakService) {}
 
   public async ngOnInit() {
@@ -46,9 +44,5 @@ export class NavbarComponent {
 
   public register() {
     this.keycloak.register();
-  }
-
-  public profile() {
-    this.profileEvent.emit();
   }
 }
