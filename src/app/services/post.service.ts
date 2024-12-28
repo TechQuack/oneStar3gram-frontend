@@ -20,6 +20,10 @@ export class PostService {
         return this.http.get<Post[]>(`${this.apiUrl}`);
     }
 
+    getSelfPosts(): Observable<Post[]> {
+      return this.http.get<Post[]>(`${this.apiUrl}/self`);
+    }
+
     editPost(postId: number, alt: string | null, description: string | null, visibility: boolean | null): Observable<Post> {
       const body = {
         alt: alt,

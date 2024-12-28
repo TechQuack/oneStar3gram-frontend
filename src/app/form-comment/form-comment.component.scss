@@ -1,0 +1,24 @@
+#form form{
+  width: 90%;
+  background-color: #99B8A9;
+  margin: 10px auto;
+  padding : 1%;
+  border-radius: 5px;
+  display: flex;
+
+  input {
+    width: 80%;
+  }
+
+  #submit {
+    width: 20%;
+    display: flex;
+    justify-content: end;
+    #submit-button {
+      border-radius: 40px;
+      text-align: center;
+      background-color: #1796A4;
+      color: white;
+    }
+  }
+}
