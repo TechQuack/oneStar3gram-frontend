@@ -1,25 +1,37 @@
 <div class="profile">
-  <h1>Profile</h1>
+  <div class="header">
+    <h1>{{username}}</h1>
+    <div class="resume">
+      <div class="logo">
+        <img src="assets/profile.svg" alt="profile"/>
+      </div>
+      <div class="nbPosts">
+        <p>
+          <span class="count">{{posts.length}}</span>
+          <br/>
+          <span class="label">posts</span>
+        </p>
+      </div>
+    </div>
+</div>
   <div class="container">
     <div class="info block">
       <div>
-        <p>Username : {{username}}</p>
+        <p class="name">{{firstName}} {{lastName}}</p>
       </div>
-      <div>
-        <p>First name : {{firstName}}</p>
-      </div>
-      <div>
-        <p>Last name : {{lastName}}</p>
-      </div>
-      <div>
-        <p>Email : {{email}}</p>
+      <div class="contact">
+        <p>Contact: <a href="mailto:{{email}}">{{email}}</a></p>
       </div>
     </div>
     <div class="update block">
       <form action="https://proxy-onestar3gram:8080/realms/OneStar3gram/account/">
         <input type="submit" value="Update profile">
       </form>
-      <button (click)="disconnect()">Disconnect</button>
     </div>
+  </div>
+  <div class="posts">
+    @for(post of posts; track post.id) {
+      <app-post [id]="post.id"></app-post>
+    }
   </div>
 </div>
