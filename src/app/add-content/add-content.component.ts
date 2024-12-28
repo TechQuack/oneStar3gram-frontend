@@ -4,6 +4,8 @@ import {MediaFileService} from '../services/media-file.service';
 import {PostService} from '../services/post.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {KeycloakService} from 'keycloak-angular';
+import {ImageService} from "../services/image.service";
+import {VideoService} from "../services/video.service";
 
 @Component({
   selector: 'app-add-content',
@@ -25,7 +27,8 @@ export class AddContentComponent {
 
   id: number = 0;
 
-  constructor(private mediaService: MediaFileService,
+  constructor(private imageService: ImageService,
+              private videoService: VideoService,
               private postService: PostService,
               private router: Router,
               private keycloakService: KeycloakService,
@@ -39,8 +42,17 @@ export class AddContentComponent {
     this.route.params.subscribe(params => {
       if (params['id'] !== undefined) {
         this.id = +params['id'];
+        this.postService.getPost(this.id).subscribe(post => {
+          this.postForm.controls['isVideo'].setValue(post.media.video);
+          this.postForm.controls['alt'].setValue(post.alt);
+          this.postForm.controls['description'].setValue(post.alt);
+        })
       }
     })
+  }
+
+  isAddingNewPost() {
+    return this.id == 0;
   }
 
   onPickedMedia(event: Event) {
@@ -52,24 +64,30 @@ export class AddContentComponent {
   }
 
   onSubmit() {
-    if (this.postForm.invalid) {
+    if (this.postForm.invalid && this.isAddingNewPost()) {
       return;
     }
     const alt: string = this.postForm.controls['alt'].value;
     const description: string = this.postForm.controls['description'].value;
     const isPrivate: boolean = this.postForm.controls['isPrivate'].value;
     const media: File = this.postForm.controls['media'].value;
-    if (this.postForm.controls['isVideo'].value) {
-      this.mediaService.uploadVideo(media).subscribe(mediaFile => {
-        this.postService.sendPost(mediaFile.id, alt, description, isPrivate).subscribe(() => {
-          this.router.navigate([""]);
+    if (this.isAddingNewPost()) {
+      if (this.postForm.controls['isVideo'].value) {
+        this.videoService.createMedia(media).subscribe(mediaFile => {
+          this.postService.sendPost(mediaFile.id, alt, description, isPrivate).subscribe(() => {
+            this.router.navigate([""]);
+          });
         });
-      });
+      } else {
+        this.imageService.createMedia(media).subscribe(mediaFile => {
+          this.postService.sendPost(mediaFile.id, alt, description, isPrivate).subscribe(() => {
+            this.router.navigate([""]);
+          });
+        });
+      }
     } else {
-      this.mediaService.uploadImage(media).subscribe(mediaFile => {
-        this.postService.sendPost(mediaFile.id, alt, description, isPrivate).subscribe(() => {
-          this.router.navigate([""]);
-        });
+      this.postService.editPost(this.id, alt, description, isPrivate).subscribe(() => {
+        this.router.navigate([""]);
       });
     }
   }
