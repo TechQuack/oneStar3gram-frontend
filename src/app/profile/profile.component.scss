@@ -20,7 +20,7 @@
   margin-right: 1em;
 }
 
-.update input[type="submit"] {
+.update input {
   padding: 0.75em 1.5em;
   border-radius: 25px;
   border: none;
@@ -32,7 +32,7 @@
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.update input[type="submit"]:hover {
+.update input:hover {
   background-color: #45a049;
   transform: translateY(-2px);
 }
