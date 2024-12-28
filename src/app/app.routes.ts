@@ -6,14 +6,8 @@ import { PostDetailComponent } from './post-detail/post-detail.component';
 import {ProfileComponent} from './profile/profile.component';
 
 export const routes: Routes = [
-  {
-    path: '',
-    component: HomeComponent
-  },
-  {
-    path: 'profile',
-    component: ProfileComponent
-  },
+  {path: '', component: HomeComponent},
+  {path: 'profile', component: ProfileComponent},
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: {roles: ['Admin']}},
   {path: 'post/:id', component: PostDetailComponent}
 ];
