@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Post } from '../entities/post.entity';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { PostComment } from '../entities/comment.entity';
 
 @Injectable({
     providedIn: 'root'
@@ -13,19 +14,38 @@ export class PostService {
     constructor(private http: HttpClient) { }
 
     getPost(id: number): Observable<Post> {
-        return this.http.get<Post>(`${this.apiUrl}/${id}`);
+        return this.http.get<Post>(`${this.apiUrl}/${id}`).pipe(
+            map(response => {
+                response.comments = this.manageComments(response.comments)
+                return response
+            })
+        );
     }
 
     getPosts(): Observable<Post[]> {
-        return this.http.get<Post[]>(`${this.apiUrl}`);
+        return this.http.get<Post[]>(`${this.apiUrl}`).pipe(
+            map(response => 
+                response.map(
+                    response => {
+                        response.comments = this.manageComments(response.comments)
+                        return response
+                    }
+                )
+            )
+        );
     }
 
     editPost(postId: number, alt: string | null, description: string | null, visibility: boolean | null): Observable<Post> {
         let params = new HttpParams();
         //params = params.append("alt", alt)
         //params = params.append("description", description)
-        //params = params.append("visibility", visibility)
-        return this.http.put<Post>(`${this.apiUrl}/edit/${postId}`, { params : params}) //TODO
+        //params = params.append("visibility", visibility)  //TODO
+        return this.http.put<Post>(`${this.apiUrl}/edit/${postId}`, { params : params}).pipe(
+            map(response => {
+                response.comments = this.manageComments(response.comments)
+                return response
+            })
+        );
     }
 
     sendPost(postId: number, alt: string, description: string, visibility: boolean, mediaFileId: number): Observable<number> {
@@ -37,6 +57,25 @@ export class PostService {
     }
 
     likePost(postId: number): Observable<Post> {
-        return this.http.put<Post>(`${this.apiUrl}/like/${postId}`, {})
+        return this.http.put<Post>(`${this.apiUrl}/like/${postId}`, {}).pipe(
+            map(response => {
+                response.comments = this.manageComments(response.comments)
+                return response
+            })
+        );
+    }
+
+    private manageComments(comments: PostComment[]) : PostComment[] {
+        return comments.map(comment => this.manageComment(comment))
+    }
+
+    private manageComment(comment : PostComment) : PostComment {
+        return {
+            id: comment.id,
+            author: comment.author,
+            value: comment.value,
+            postDate: new Date(comment.postDate),
+            likers: comment.likers
+          }
     }
 }

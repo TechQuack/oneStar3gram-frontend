@@ -13,16 +13,9 @@ import { KeycloakService } from 'keycloak-angular';
 })
 export class PostComponent {
 
-  @Input() id: number = 0;
-
-  post: Post | null = null;
+  @Input() post: Post | null = null;
 
   constructor(private postService: PostService, private keycloakService : KeycloakService) {}
-
-
-  async ngOnInit() {
-    this.postService.getPost(this.id).subscribe(post => this.post = post)
-  }
 
   hasUserLikedPost() {
     let user = this.keycloakService.getUsername();
@@ -30,7 +23,7 @@ export class PostComponent {
   }
 
   likePost() {
-    this.postService.likePost(this.id).subscribe(post => this.post = post)
+    this.postService.likePost(this.post!.id).subscribe(post => this.post = post)
   }
 
 }

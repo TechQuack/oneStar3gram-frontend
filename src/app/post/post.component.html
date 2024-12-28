@@ -1,6 +1,6 @@
 @if(post != null) {
     <div class="post">
-        <div class="post-profile" [routerLink]="['/post', id]">
+        <div class="post-profile" [routerLink]="['/post', post.id]">
             <img src="assets/profile.svg">
             {{post.creator}}
         </div>
@@ -19,7 +19,7 @@
                 }
                 {{post.likers.length}}
             </div>
-            <div class="comments" [routerLink]="['/post', id]">
+            <div class="comments" [routerLink]="['/post', post.id]">
                 <img src="assets/comment.svg">
                 {{post.comments.length}}
             </div>
