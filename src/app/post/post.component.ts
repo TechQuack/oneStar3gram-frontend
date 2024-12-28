@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { PostService } from '../services/post.service';
 import { Post } from '../entities/post.entity';
-import { RouterLink } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {KeycloakService} from 'keycloak-angular';
 
 @Component({
@@ -28,7 +28,9 @@ export class PostComponent {
 
   deletePost() {
     if (this.isAdmin) {
-      this.postService.deletePost(this.id);
+      this.postService.deletePost(this.id).subscribe(() => {
+        window.location.reload();
+      });
     }
   }
 

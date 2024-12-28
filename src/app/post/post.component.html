@@ -1,27 +1,28 @@
 @if(post != null) {
     <div class="post">
         <div class="post-profile" [routerLink]="['/post', id]">
-            <img src="assets/profile.svg">
+            <img src="assets/profile.svg" alt="profile">
             {{post.creator}}
         </div>
         @if(post.media.video) {
             <video controls src="https://proxy-onestar3gram:8081/uploads/{{post.media.generatedName}}"></video>
         }
         @else {
-            <img src="https://proxy-onestar3gram:8081/uploads/{{post.media.generatedName}}" />
+            <img src="https://proxy-onestar3gram:8081/uploads/{{post.media.generatedName}}" alt="{{post.alt}}"/>
         }
         <div class="post-metadata">
             <div class="likes">
-                <img src="assets/like.svg">
+                <img src="assets/like.svg" alt="like">
                 {{post.likers.length}}
             </div>
             @if (isAdmin) {
               <div>
                 <button type="button" (click)="deletePost()">delete</button>
+                <button type="button" routerLink="/edit/{{id}}">edit</button>
               </div>
             }
             <div class="comments" [routerLink]="['/post', id]">
-                <img src="assets/comment.svg">
+                <img src="assets/comment.svg" alt="comments">
                 {{post.comments.length}}
             </div>
         </div>

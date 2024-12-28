@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Post } from '../entities/post.entity';
 import { environment } from '../../environments/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -44,7 +44,7 @@ export class PostService {
     }
 
     deletePost(postId: number): Observable<void> {
-        return this.http.delete<void>(`${this.apiUrl}/delete/${postId}`)
+        return this.http.delete<void>(`${this.apiUrl}/${postId}`);
     }
 
     likePost(postId: number): Observable<Post> {
