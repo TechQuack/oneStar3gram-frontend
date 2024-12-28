@@ -21,11 +21,12 @@ export class PostService {
     }
 
     editPost(postId: number, alt: string | null, description: string | null, visibility: boolean | null): Observable<Post> {
-        let params = new HttpParams();
-        //params = params.append("alt", alt)
-        //params = params.append("description", description)
-        //params = params.append("visibility", visibility)
-        return this.http.put<Post>(`${this.apiUrl}/edit/${postId}`, { params : params}) //TODO
+      const body = {
+        alt: alt,
+        description: description,
+        visibility: visibility
+      }
+      return this.http.put<Post>(`${this.apiUrl}/${postId}`, body);
     }
 
     sendPost(mediaId: number, alt: string, description: string, visibility: boolean): Observable<number> {
