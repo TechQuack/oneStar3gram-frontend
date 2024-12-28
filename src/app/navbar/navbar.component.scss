@@ -1,13 +1,11 @@
 .navBar {
-  height: 4rem;
+  height: 100%;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: #1796A4;
   box-sizing: border-box;
-  position: fixed;
-  top:0;
 }
 
 #appName, a {
@@ -44,4 +42,8 @@ img {
   width: 2.5rem;
   height: 2.5rem;
   object-fit: contain;
+}
+
+.navigation-button {
+  cursor: pointer;
 }

@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import {HomeComponent} from './home/home.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { AuthGuard } from './config/role.config';
 import {ProfileComponent} from './profile/profile.component';
 
 export const routes: Routes = [
@@ -10,5 +12,6 @@ export const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent
-  }
+  },
+  {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: {roles: ['Admin']}}
 ];
