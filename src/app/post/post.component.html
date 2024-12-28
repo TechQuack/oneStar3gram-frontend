@@ -12,7 +12,11 @@
         }
         <div class="post-metadata">
             <div class="likes">
-                <img src="assets/like.svg">
+                @if(hasUserLikedPost()) {
+                    <img src="assets/full_like.svg" (click)="likePost()">  
+                } @else {
+                    <img src="assets/like.svg" (click)="likePost()">
+                }
                 {{post.likers.length}}
             </div>
             <div class="comments" [routerLink]="['/post', id]">

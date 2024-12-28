@@ -37,10 +37,6 @@ export class PostService {
     }
 
     likePost(postId: number): Observable<Post> {
-        return this.http.put<Post>(`${this.apiUrl}/like/add/${postId}`, {})
-    }
-
-    unlikePost(postId: number): Observable<Post> {
-        return this.http.put<Post>(`${this.apiUrl}/like/remove/${postId}`, {})
+        return this.http.put<Post>(`${this.apiUrl}/like/${postId}`, {})
     }
 }
