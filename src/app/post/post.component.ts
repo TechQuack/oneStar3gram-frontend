@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { PostService } from '../services/post.service';
 import { Post } from '../entities/post.entity';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-post',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss'
 })

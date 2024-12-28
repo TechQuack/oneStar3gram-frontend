@@ -21,7 +21,6 @@
 .no-data {
     text-align: center;
     width: 100%;
-    height: 100%;
     position: absolute;
     left: 0;
     top: 45%;
@@ -53,14 +52,36 @@
 .image-box {
     grid-column: 1;
     grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 3rem;
+
+    canvas {
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 .video-box {
     grid-column: 2;
     grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 3rem;
+
+    canvas {
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 .user-manage-box {
     grid-column: 3;
     grid-row: 2;
+}
+
+canvas {
+    color: black;
 }
