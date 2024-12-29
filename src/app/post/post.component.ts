@@ -37,7 +37,7 @@ export class PostComponent {
   deletePost() {
     if (this.isAdmin) {
       this.postService.deletePost(this.post!.id).subscribe(() => {
-        window.location.reload();
+        this.post = null;
       });
     }
   }
