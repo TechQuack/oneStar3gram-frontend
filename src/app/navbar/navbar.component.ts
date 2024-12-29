@@ -28,12 +28,11 @@ export class NavbarComponent {
   constructor (private readonly keycloak : KeycloakService) {}
 
   public async ngOnInit() {
-    this.username = (await this.keycloak.loadUserProfile()).username;
-
-    this.isLogged = await this.keycloak.isLoggedIn();
+    this.isLogged = this.keycloak.isLoggedIn();
 
     if (this.isLogged) {
       this.user = await this.keycloak.loadUserProfile();
+      this.username = this.user.username;
     }
   }
 

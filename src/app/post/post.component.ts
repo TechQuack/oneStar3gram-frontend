@@ -18,6 +18,9 @@ export class PostComponent {
   constructor(private postService: PostService, private keycloakService : KeycloakService) {}
 
   hasUserLikedPost() {
+    if (!this.keycloakService.isLoggedIn()) {
+      return false;
+    }
     let user = this.keycloakService.getUsername();
     return this.post?.likers.find(u => u == user)
   }
