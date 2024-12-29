@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Post } from '../entities/post.entity';
 import { environment } from '../../environments/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { PostComment } from '../entities/comment.entity';
+import {KeycloakService} from 'keycloak-angular';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,7 @@ import { PostComment } from '../entities/comment.entity';
 export class PostService {
     private apiUrl = environment.apiUrl + 'post'
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private keycloakService: KeycloakService) { }
 
     getPost(id: number): Observable<Post> {
         return this.http.get<Post>(`${this.apiUrl}/${id}`).pipe(
@@ -24,7 +25,7 @@ export class PostService {
 
     getPosts(): Observable<Post[]> {
         return this.http.get<Post[]>(`${this.apiUrl}`).pipe(
-            map(response => 
+            map(response =>
                 response.map(
                     response => {
                         response.comments = this.manageComments(response.comments)
@@ -34,6 +35,25 @@ export class PostService {
             )
         );
     }
+
+  getUserPosts(username: string): Observable<Post[]> {
+    const token = this.keycloakService.getToken();
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.get<Post[]>(`${this.apiUrl}/author/${username}`, {headers}).pipe(
+      map(response =>
+        response.map(
+          response => {
+            response.comments = this.manageComments(response.comments)
+            return response
+          }
+        )
+      )
+    );
+  }
 
     getSelfPosts(): Observable<Post[]> {
       return this.http.get<Post[]>(`${this.apiUrl}/self`);

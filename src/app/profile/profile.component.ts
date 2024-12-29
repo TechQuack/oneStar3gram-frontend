@@ -30,9 +30,9 @@ export class ProfileComponent implements OnInit{
     this.route.params.subscribe(params => {
       let username =  params['username'];
       this.loadProfile(username)
-    })
-    this.postService.getSelfPosts().subscribe(posts => {
-      this.posts = posts
+      this.postService.getUserPosts(username).subscribe(posts => {
+        this.posts = posts
+      })
     })
   }
 
