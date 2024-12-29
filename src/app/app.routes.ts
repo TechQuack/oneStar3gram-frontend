@@ -12,6 +12,5 @@ export const routes: Routes = [
   {path: 'edit/:id', component: AddContentComponent},
   {path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: {roles: ['Admin']}},
-  {path: 'profile', component: ProfileComponent},
   {path: 'post/:id', component: PostDetailComponent}
 ];
