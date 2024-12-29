@@ -78,6 +78,15 @@ export class UserService {
       )
   }
 
+  getUserByUsername(username: string | null): Observable<any> {
+    const token = this.keycloakService.getToken();
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    const url  =environment.keycloakUrl + 'users?username=' + username
+    return this.http.get(url, { headers });
+  }
 
   private getRoleByName(roleName: string): Observable<object> {
     const url = environment.keycloakUrl + 'roles/' + roleName;

@@ -1,12 +1,15 @@
 import { KeycloakService } from 'keycloak-angular';
 import { PostComment } from '../entities/comment.entity';
-import { CommentService } from './../services/comment.service';
+import { CommentService } from '../services/comment.service';
 import { Component, Input } from '@angular/core';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-comment',
   standalone: true,
-  imports: [],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.scss'
 })
