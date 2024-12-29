@@ -24,8 +24,10 @@
               <img src="assets/like.svg" (click)="likeComment()">
           }
           {{comment.likers.length}}
-      </div>
-        <a (click)="removeComment()" class="delete"><img src="assets/remove.svg" alt="Delete button"/></a>
+        </div>
+        @if(canDeleteComment()) {
+          <a (click)="removeComment()" class="delete"><img src="assets/remove.svg" alt="Delete button"/></a>
+        }
       </div>
     </div>
   </div>

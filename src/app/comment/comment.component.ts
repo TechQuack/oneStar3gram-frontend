@@ -29,8 +29,15 @@ export class CommentComponent {
     return this.comment?.likers.find(u => u == user)
   }
 
+  canDeleteComment() {
+    let user = this.keycloakService.getUsername();
+    return (this.comment?.author ?? "") == user || this.keycloakService.getUserRoles().includes("Admin")
+  }
+
   removeComment() {
-    this.commentService.deleteComment(this.comment!.id);
+    this.commentService.deleteComment(this.comment!.id).subscribe(
+      _ => this.comment = undefined
+    );
   }
 
 }
