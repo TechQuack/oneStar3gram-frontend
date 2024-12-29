@@ -65,7 +65,7 @@ export class PostService {
         description: description,
         visibility: visibility
       }
-      return this.http.put<Post>(`${this.apiUrl}/edit/${postId}`, body).pipe(
+      return this.http.put<Post>(`${this.apiUrl}/${postId}`, body).pipe(
         map(response => {
           response.comments = this.manageComments(response.comments)
           return response

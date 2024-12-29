@@ -8,7 +8,7 @@
           @if (isAdmin) {
             <div class="admin-actions">
               <img id="delete" src="assets/cross.svg" alt="delete post" (click)="deletePost()">
-              <img id="edit" src="assets/pencil.svg" alt="edit post" routerLink="/edit/{{id}}">
+              <img id="edit" src="assets/pencil.svg" alt="edit post" routerLink="/edit/{{post.id}}">
             </div>
           }
         </div>

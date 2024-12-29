@@ -48,7 +48,8 @@ export class AddContentComponent {
         this.postService.getPost(this.id).subscribe(post => {
           this.isVideo = post.media.video;
           this.postForm.controls['alt'].setValue(post.alt);
-          this.postForm.controls['description'].setValue(post.alt);
+          this.postForm.controls['description'].setValue(post.description);
+          this.isPrivate = post.isPrivate;
           this.link = `https://proxy-onestar3gram:8081/uploads/${post.media.generatedName}`;
           this.submitValue = "Update post";
         })
