@@ -1,31 +1,34 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MediaFileService} from '../services/media-file.service';
 import {PostService} from '../services/post.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {KeycloakService} from 'keycloak-angular';
 import {ImageService} from "../services/image.service";
 import {VideoService} from "../services/video.service";
+import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'app-add-content',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgClass
   ],
   templateUrl: './add-content.component.html',
   styleUrl: './add-content.component.scss'
 })
 export class AddContentComponent {
   postForm: FormGroup = new FormGroup({
-    isVideo: new FormControl(false),
     media: new FormControl(null, Validators.required),
     alt: new FormControl('', Validators.maxLength(200)),
-    description: new FormControl('', Validators.maxLength(500)),
-    isPrivate: new FormControl(false, Validators.required)
+    description: new FormControl('', Validators.maxLength(500))
   });
 
   id: number = 0;
+  link?: string | ArrayBuffer | null;
+  isVideo: boolean = false;
+  isPrivate: boolean = true;
+  submitValue: string = "Send post";
 
   constructor(private imageService: ImageService,
               private videoService: VideoService,
@@ -43,9 +46,11 @@ export class AddContentComponent {
       if (params['id'] !== undefined) {
         this.id = +params['id'];
         this.postService.getPost(this.id).subscribe(post => {
-          this.postForm.controls['isVideo'].setValue(post.media.video);
+          this.isVideo = post.media.video;
           this.postForm.controls['alt'].setValue(post.alt);
           this.postForm.controls['description'].setValue(post.alt);
+          this.link = `https://proxy-onestar3gram:8081/uploads/${post.media.generatedName}`;
+          this.submitValue = "Update post";
         })
       }
     })
@@ -59,8 +64,23 @@ export class AddContentComponent {
     const element: HTMLInputElement = event.target as HTMLInputElement;
     if (element.files != null) {
       const file = element.files[0];
+      const reader = new FileReader();
+      reader.onload = e => {
+        if (e.target != null) {
+          this.link = reader.result;
+        }
+      };
+      reader.readAsDataURL(file);
       this.postForm.patchValue({media: file});
     }
+  }
+
+  setMediaType(isVideo: boolean) {
+    this.isVideo = isVideo;
+  }
+
+  setVisibility(isPrivate: boolean) {
+    this.isPrivate = isPrivate;
   }
 
   onSubmit() {
@@ -69,24 +89,23 @@ export class AddContentComponent {
     }
     const alt: string = this.postForm.controls['alt'].value;
     const description: string = this.postForm.controls['description'].value;
-    const isPrivate: boolean = this.postForm.controls['isPrivate'].value;
     const media: File = this.postForm.controls['media'].value;
     if (this.isAddingNewPost()) {
-      if (this.postForm.controls['isVideo'].value) {
+      if (this.isVideo) {
         this.videoService.createMedia(media).subscribe(mediaFile => {
-          this.postService.sendPost(mediaFile.id, alt, description, isPrivate).subscribe(() => {
+          this.postService.sendPost(mediaFile.id, alt, description, this.isPrivate).subscribe(() => {
             this.router.navigate([""]);
           });
         });
       } else {
         this.imageService.createMedia(media).subscribe(mediaFile => {
-          this.postService.sendPost(mediaFile.id, alt, description, isPrivate).subscribe(() => {
+          this.postService.sendPost(mediaFile.id, alt, description, this.isPrivate).subscribe(() => {
             this.router.navigate([""]);
           });
         });
       }
     } else {
-      this.postService.editPost(this.id, alt, description, isPrivate).subscribe(() => {
+      this.postService.editPost(this.id, alt, description, this.isPrivate).subscribe(() => {
         this.router.navigate([""]);
       });
     }
