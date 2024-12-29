@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { PostService } from '../services/post.service';
 import { Post } from '../entities/post.entity';
 import { RouterLink } from '@angular/router';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-post',
@@ -12,15 +13,17 @@ import { RouterLink } from '@angular/router';
 })
 export class PostComponent {
 
-  @Input() id: number = 0;
+  @Input() post: Post | null = null;
 
-  post: Post | null = null;
+  constructor(private postService: PostService, private keycloakService : KeycloakService) {}
 
-  constructor(private postService: PostService) {}
+  hasUserLikedPost() {
+    let user = this.keycloakService.getUsername();
+    return this.post?.likers.find(u => u == user)
+  }
 
-
-  async ngOnInit() {
-    this.postService.getPost(this.id).subscribe(post => this.post = post)
+  likePost() {
+    this.postService.likePost(this.post!.id).subscribe(post => this.post = post)
   }
 
 }

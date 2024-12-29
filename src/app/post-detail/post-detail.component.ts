@@ -3,6 +3,8 @@ import { PostComponent } from "../post/post.component";
 import { ListCommentComponent } from "../list-comment/list-comment.component";
 import { FormCommentComponent } from "../form-comment/form-comment.component";
 import { ActivatedRoute } from '@angular/router';
+import { PostService } from '../services/post.service';
+import { Post } from '../entities/post.entity';
 
 @Component({
   selector: 'app-post-detail',
@@ -13,12 +15,15 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PostDetailComponent {
   private route = inject(ActivatedRoute);
-  
-  id: number = 0;
 
-  ngOnInit() {
+  post: Post | null = null
+
+  constructor(private postService: PostService){}
+
+  async ngOnInit() {
     this.route.params.subscribe(params => {
-       this.id = +params['id'];
-    });
+       var id = +params['id'];
+       this.postService.getPost(id).subscribe(post => this.post = post)
+    }); 
   }
 }

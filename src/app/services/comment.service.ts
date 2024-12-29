@@ -28,7 +28,19 @@ export class CommentService {
     }
 
     getPostComments(id: number): Observable<PostComment[]> {
-      return this.http.get<PostComment[]>(`${this.apiUrlPost}/${id}/comments`);
+      return this.http.get<PostComment[]>(`${this.apiUrlPost}/${id}/comments`).pipe(
+        map( responses => 
+          responses.map(response => (
+            {
+              id: response.id,
+              author: response.author,
+              value: response.value,
+              postDate: new Date(response.postDate),
+              likers: response.likers
+            }
+          )),
+        )
+      );
     }
 
     getPostFromComment(id: number): Observable<Post> {
@@ -44,7 +56,16 @@ export class CommentService {
     }
 
     putLikeComment(id : number): Observable<PostComment> {
-      return this.http.put<PostComment>(`${this.apiUrlComment}/${id}/like`, {})
+      return this.http.put<PostComment>(`${this.apiUrlComment}/${id}/like`, {}).pipe(
+        map( response => ({
+          id: response.id,
+          author: response.author,
+          value: response.value,
+          postDate: new Date(response.postDate),
+          likers: response.likers
+        }),
+        )
+      );
     }
 
     deleteComment(id : number): Observable<PostComment> {

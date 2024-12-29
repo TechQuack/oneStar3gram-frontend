@@ -17,10 +17,14 @@
         {{comment.value}}
       </div>
       <div class="icon">
-        <a (click)="toggleLike()" class="likes">
-          <img src="assets/like.svg" alt="Like button"/>
+        <div class="likes">
+          @if(hasUserLikedComment()) {
+              <img src="assets/full_like.svg" (click)="likeComment()">  
+          } @else {
+              <img src="assets/like.svg" (click)="likeComment()">
+          }
           {{comment.likers.length}}
-        </a>
+      </div>
         <a (click)="removeComment()" class="delete"><img src="assets/remove.svg" alt="Delete button"/></a>
       </div>
     </div>
