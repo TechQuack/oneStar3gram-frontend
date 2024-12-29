@@ -1,42 +1,44 @@
+import { KeycloakService } from 'keycloak-angular';
 import { PostComment } from '../entities/comment.entity';
-import { CommentService } from './../services/comment.service';
+import { CommentService } from '../services/comment.service';
 import { Component, Input } from '@angular/core';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-comment',
   standalone: true,
-  imports: [],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.scss'
 })
 export class CommentComponent {
-  @Input() id: number = 0;
 
-  constructor (readonly commentService : CommentService) {}
+  @Input() comment: PostComment | undefined;
 
-  comment: PostComment | null = null;
+  constructor (private readonly commentService : CommentService, private keycloakService: KeycloakService) {}
 
-  async ngOnInit() {
-    this.commentService.getComment(this.id).subscribe(comment => this.comment = comment)
-  }
-
-  toggleLike() {
-    // si l'utilisateur a deja liker
-    // sinon
-    this.likeComment();
-  }
 
   likeComment() {
-    this.commentService.putLikeComment(this.id);
+    this.commentService.putLikeComment(this.comment!.id).subscribe(comment => this.comment = comment);
+  }
+
+  hasUserLikedComment() {
+    let user = this.keycloakService.getUsername();
+    return this.comment?.likers.find(u => u == user)
+  }
+
+  canDeleteComment() {
+    let user = this.keycloakService.getUsername();
+    return (this.comment?.author ?? "") == user || this.keycloakService.getUserRoles().includes("Admin")
   }
 
   removeComment() {
-    this.commentService.deleteComment(this.id);
+    this.commentService.deleteComment(this.comment!.id).subscribe(
+      _ => this.comment = undefined
+    );
   }
-
-  // unlikeComment() {
-  //   this.commentService.putLikeComment(this.id);
-  // }
 
 }
 

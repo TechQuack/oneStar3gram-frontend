@@ -1,7 +1,7 @@
 @if(post != null) {
     <div class="post">
         <div class="upper-bar">
-          <div class="post-profile" [routerLink]="['/post', id]">
+          <div class="post-profile" [routerLink]="['/post', post.id]">
             <img src="assets/profile.svg" alt="profile">
             <p>{{post.creator}}</p>
           </div>
@@ -20,10 +20,14 @@
         }
         <div class="post-metadata">
             <div class="likes">
-                <img src="assets/like.svg" alt="like">
+                @if(hasUserLikedPost()) {
+                    <img src="assets/full_like.svg" (click)="likePost()">
+                } @else {
+                    <img src="assets/like.svg" (click)="likePost()">
+                }
                 {{post.likers.length}}
             </div>
-            <div class="comments" [routerLink]="['/post', id]">
+            <div class="comments" [routerLink]="['/post', post.id]">
                 <img src="assets/comment.svg" alt="comments">
                 {{post.comments.length}}
             </div>

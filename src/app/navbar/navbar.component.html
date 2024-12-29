@@ -11,7 +11,7 @@
       @if (isAdmin && !isOnPage("/add")) {
         <img src="assets/add.svg" class="navigation-button" alt="add post" routerLink="/add">
       }
-      <img src="assets/profile.svg" class="navigation-button" alt="profile" routerLink="/profile"/>
+      <img src="assets/profile.svg" class="navigation-button" alt="profile" [routerLink]="['/profile', username]"/>
       <img src="assets/disconnect.svg" class="navigation-button" alt="disconnect" (click)="logout()"/>
     }
   </div>

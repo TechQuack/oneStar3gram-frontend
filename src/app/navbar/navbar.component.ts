@@ -25,6 +25,7 @@ export class NavbarComponent {
   }) user : KeycloakProfile | null = null;
 
   isAdmin: boolean = false;
+  username: string | undefined = '';
 
   constructor (private readonly keycloak : KeycloakService, private router: Router) {}
 
@@ -33,6 +34,7 @@ export class NavbarComponent {
     this.isAdmin = this.keycloak.getUserRoles().includes("Admin");
     if (this.isLogged) {
       this.user = await this.keycloak.loadUserProfile();
+      this.username = this.user.username;
     }
   }
 
