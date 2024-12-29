@@ -75,3 +75,13 @@ div.date {
 img {
   width: 40px;
 }
+
+.profile-link {
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+profile-link:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}

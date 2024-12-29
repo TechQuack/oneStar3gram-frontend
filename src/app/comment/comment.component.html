@@ -3,7 +3,7 @@
     <div class="header">
       <div class="origin">
         <span class="author">
-          <img src="assets/profile.svg" alt="Profile picture"/>
+          <img src="assets/profile.svg" alt="Profile picture" class="profile-link" [routerLink]="['/profile', comment?.author]"/>
           <p>{{comment.author}}</p>
         </span>
         <span class="date">
