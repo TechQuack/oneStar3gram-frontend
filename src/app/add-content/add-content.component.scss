@@ -137,9 +137,8 @@ input[type=file] {
 .unpressed {
   border: 0.3vw solid #72A1B4;
   cursor: pointer;
-}
-
-.unpressed:hover {
-  border: 0.3vw solid #1796A4;
-  animation: 1s ease-in;
+  &:hover {
+    border: 0.3vw solid #1796A4;
+    animation: 1s ease-in;
+  }
 }
