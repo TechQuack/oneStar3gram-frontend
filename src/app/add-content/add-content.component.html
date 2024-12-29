@@ -69,12 +69,12 @@
     </form>
     <div id="content-preview">
       <h2>Preview</h2>
-      @if (!link) {
+      @if (!mediaData) {
         <p>Please select media in order to obtain a preview</p>
       } @else if (isVideo) {
-        <video controls [src]="link"></video>
+        <video controls [src]="mediaData"></video>
       } @else {
-        <img [src]="link || 'assets/add.svg'" alt="{{postForm.controls['alt'].value}}">
+        <img [src]="mediaData" alt="{{postForm.controls['alt'].value}}">
       }
     </div>
   </div>

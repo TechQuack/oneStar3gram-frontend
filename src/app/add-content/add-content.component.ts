@@ -25,7 +25,7 @@ export class AddContentComponent {
   });
 
   id: number = 0;
-  link?: string | ArrayBuffer | null;
+  mediaData?: string | ArrayBuffer | null;
   isVideo: boolean = false;
   isPrivate: boolean = true;
   submitValue: string = "Send post";
@@ -50,7 +50,7 @@ export class AddContentComponent {
           this.postForm.controls['alt'].setValue(post.alt);
           this.postForm.controls['description'].setValue(post.description);
           this.isPrivate = post.isPrivate;
-          this.link = `https://proxy-onestar3gram:8081/uploads/${post.media.generatedName}`;
+          this.mediaData = `https://proxy-onestar3gram:8081/uploads/${post.media.generatedName}`;
           this.submitValue = "Update post";
         })
       }
@@ -68,7 +68,7 @@ export class AddContentComponent {
       const reader = new FileReader();
       reader.onload = e => {
         if (e.target != null) {
-          this.link = reader.result;
+          this.mediaData = reader.result;
         }
       };
       reader.readAsDataURL(file);
