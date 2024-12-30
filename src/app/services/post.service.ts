@@ -60,24 +60,31 @@ export class PostService {
     }
 
     editPost(postId: number, alt: string | null, description: string | null, visibility: boolean | null): Observable<Post> {
-        let params = new HttpParams();
-        //params = params.append("alt", alt)
-        //params = params.append("description", description)
-        //params = params.append("visibility", visibility)  //TODO
-        return this.http.put<Post>(`${this.apiUrl}/edit/${postId}`, { params : params}).pipe(
-            map(response => {
-                response.comments = this.manageComments(response.comments)
-                return response
-            })
-        );
+      const body = {
+        alt: alt,
+        description: description,
+        visibility: visibility
+      }
+      return this.http.put<Post>(`${this.apiUrl}/${postId}`, body).pipe(
+        map(response => {
+          response.comments = this.manageComments(response.comments)
+          return response
+        })
+      );
     }
 
-    sendPost(postId: number, alt: string, description: string, visibility: boolean, mediaFileId: number): Observable<number> {
-        return this.http.post<number>(`${this.apiUrl}/send`, {}) //TODO
+    sendPost(mediaId: number, alt: string, description: string, visibility: boolean): Observable<number> {
+        const body = {
+          mediaId: mediaId,
+          alt: alt,
+          description: description,
+          visibility: visibility
+        }
+        return this.http.post<number>(`${this.apiUrl}`, body);
     }
 
     deletePost(postId: number): Observable<void> {
-        return this.http.delete<void>(`${this.apiUrl}/delete/${postId}`)
+        return this.http.delete<void>(`${this.apiUrl}/${postId}`);
     }
 
     likePost(postId: number): Observable<Post> {

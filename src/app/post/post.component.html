@@ -1,26 +1,34 @@
 @if(post != null) {
     <div class="post">
-        <div class="post-profile" [routerLink]="['/post', post.id]">
-            <img src="assets/profile.svg">
-            {{post.creator}}
+        <div class="upper-bar">
+          <div class="post-profile" [routerLink]="['/post', post.id]">
+            <img src="assets/profile.svg" alt="profile">
+            <p>{{post.creator}}</p>
+          </div>
+          @if (isAdmin) {
+            <div class="admin-actions">
+              <img id="delete" src="assets/cross.svg" alt="delete post" (click)="deletePost()">
+              <img id="edit" src="assets/pencil.svg" alt="edit post" routerLink="/edit/{{post.id}}">
+            </div>
+          }
         </div>
         @if(post.media.video) {
             <video controls src="https://proxy-onestar3gram:8081/uploads/{{post.media.generatedName}}"></video>
         }
         @else {
-            <img src="https://proxy-onestar3gram:8081/uploads/{{post.media.generatedName}}" />
+            <img src="https://proxy-onestar3gram:8081/uploads/{{post.media.generatedName}}" alt="{{post.alt}}"/>
         }
         <div class="post-metadata">
             <div class="likes">
                 @if(hasUserLikedPost()) {
-                    <img src="assets/full_like.svg" (click)="likePost()">  
+                    <img src="assets/full_like.svg" (click)="likePost()">
                 } @else {
                     <img src="assets/like.svg" (click)="likePost()">
                 }
                 {{post.likers.length}}
             </div>
             <div class="comments" [routerLink]="['/post', post.id]">
-                <img src="assets/comment.svg">
+                <img src="assets/comment.svg" alt="comments">
                 {{post.comments.length}}
             </div>
         </div>

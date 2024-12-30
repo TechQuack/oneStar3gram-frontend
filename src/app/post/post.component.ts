@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { PostService } from '../services/post.service';
 import { Post } from '../entities/post.entity';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
 
 @Component({
@@ -14,6 +14,7 @@ import { KeycloakService } from 'keycloak-angular';
 export class PostComponent {
 
   @Input() post: Post | null = null;
+  isAdmin: boolean = false;
 
   constructor(private postService: PostService, private keycloakService : KeycloakService) {}
 
@@ -27,6 +28,18 @@ export class PostComponent {
 
   likePost() {
     this.postService.likePost(this.post!.id).subscribe(post => this.post = post)
+  }
+
+   ngOnInit() {
+    this.isAdmin = this.keycloakService.getUserRoles().includes("Admin");
+  }
+
+  deletePost() {
+    if (this.isAdmin) {
+      this.postService.deletePost(this.post!.id).subscribe(() => {
+        this.post = null;
+      });
+    }
   }
 
 }

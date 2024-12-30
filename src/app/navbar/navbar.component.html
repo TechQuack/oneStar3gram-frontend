@@ -8,6 +8,9 @@
       <a href="/login" class="navigation-button" (click)="login()">Login</a>
       <a href="/register" class="navigation-button" (click)="register()">Register</a>
     } @else {
+      @if (isAdmin && !isOnPage("/add")) {
+        <img src="assets/add.svg" class="navigation-button" alt="add post" routerLink="/add">
+      }
       <img src="assets/profile.svg" class="navigation-button" alt="profile" [routerLink]="['/profile', username]"/>
       <img src="assets/disconnect.svg" class="navigation-button" alt="disconnect" (click)="logout()"/>
     }
