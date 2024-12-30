@@ -3,6 +3,7 @@ import { PostComment } from '../entities/comment.entity';
 import { CommentService } from '../services/comment.service';
 import { Component, Input } from '@angular/core';
 import {RouterLink} from '@angular/router';
+import { PopupService } from '../services/popup.service';
 
 @Component({
   selector: 'app-comment',
@@ -17,7 +18,9 @@ export class CommentComponent {
 
   @Input() comment: PostComment | undefined;
 
-  constructor (private readonly commentService : CommentService, private keycloakService: KeycloakService) {}
+  constructor (private readonly commentService : CommentService, 
+    private keycloakService: KeycloakService, 
+    private popupService: PopupService) {}
 
 
   likeComment() {
@@ -36,7 +39,10 @@ export class CommentComponent {
 
   removeComment() {
     this.commentService.deleteComment(this.comment!.id).subscribe(
-      _ => this.comment = undefined
+      _ => {
+        this.comment = undefined;
+        this.popupService.openSuccess("Comment deleted")
+      }
     );
   }
 

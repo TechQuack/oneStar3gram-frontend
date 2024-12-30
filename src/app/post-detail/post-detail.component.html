@@ -1,5 +1,5 @@
 <app-post [post]="post"></app-post>
 <div id="comment">
-  <app-form-comment [idPost]="post?.id ?? 0"></app-form-comment>
+  <app-form-comment [idPost]="post?.id ?? 0" (newComment)="addNewComment($event)"></app-form-comment>
   <app-list-comment [comments]="post?.comments ?? []"></app-list-comment>
 </div>

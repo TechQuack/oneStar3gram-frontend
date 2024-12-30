@@ -6,6 +6,7 @@ import {KeycloakService} from 'keycloak-angular';
 import {ImageService} from "../services/image.service";
 import {VideoService} from "../services/video.service";
 import {NgClass} from '@angular/common';
+import { PopupService } from '../services/popup.service';
 
 @Component({
   selector: 'app-add-content',
@@ -34,6 +35,7 @@ export class AddContentComponent {
               private videoService: VideoService,
               private postService: PostService,
               private router: Router,
+              private popupService: PopupService,
               private keycloakService: KeycloakService,
               private route: ActivatedRoute) {}
 
@@ -96,18 +98,21 @@ export class AddContentComponent {
         this.videoService.createMedia(media).subscribe(mediaFile => {
           this.postService.sendPost(mediaFile.id, alt, description, this.isPrivate).subscribe(() => {
             this.router.navigate([""]);
+            this.popupService.openSuccess("Post created")
           });
         });
       } else {
         this.imageService.createMedia(media).subscribe(mediaFile => {
           this.postService.sendPost(mediaFile.id, alt, description, this.isPrivate).subscribe(() => {
             this.router.navigate([""]);
+            this.popupService.openSuccess("Post created")
           });
         });
       }
     } else {
       this.postService.editPost(this.id, alt, description, this.isPrivate).subscribe(() => {
         this.router.navigate([""]);
+        this.popupService.openSuccess("Post edited")
       });
     }
   }

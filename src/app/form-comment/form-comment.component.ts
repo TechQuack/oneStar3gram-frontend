@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommentService } from '../services/comment.service';
 import { PostComment } from '../entities/comment.entity';
+import { PopupService } from '../services/popup.service';
 
 @Component({
   selector: 'app-form-comment',
@@ -13,16 +14,18 @@ import { PostComment } from '../entities/comment.entity';
 export class FormCommentComponent {
   @Input() idPost: number = 0;
 
+  @Output() newComment: EventEmitter<PostComment> = new EventEmitter()
+
   commentForm : FormGroup = new FormGroup({
     value : new FormControl(""),
   });
 
-  comment: PostComment | null = null;
-
-  constructor (readonly commentService : CommentService) { }
+  constructor (readonly commentService : CommentService, private popupService : PopupService) { }
 
   submit() {
-    this.commentService.postComment(this.idPost, this.commentForm.value.value).subscribe(c => this.comment = c);
-    window.location.reload()
+    this.commentService.postComment(this.idPost, this.commentForm.value.value).subscribe(c => {
+      this.newComment.emit(c)
+      this.popupService.openSuccess("Comment added")
+    });
   }
 }

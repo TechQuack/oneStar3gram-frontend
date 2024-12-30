@@ -5,6 +5,7 @@ import { FormCommentComponent } from "../form-comment/form-comment.component";
 import { ActivatedRoute } from '@angular/router';
 import { PostService } from '../services/post.service';
 import { Post } from '../entities/post.entity';
+import { PostComment } from '../entities/comment.entity';
 
 @Component({
   selector: 'app-post-detail',
@@ -25,5 +26,9 @@ export class PostDetailComponent {
        var id = +params['id'];
        this.postService.getPost(id).subscribe(post => this.post = post)
     }); 
+  }
+
+  addNewComment(comment: PostComment) {
+    this.post?.comments.push(comment)
   }
 }

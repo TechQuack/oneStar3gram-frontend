@@ -16,13 +16,7 @@ export class CommentService {
 
     getComment(id: number): Observable<PostComment> {
       return this.http.get<PostComment>(`${this.apiUrlComment}/${id}`).pipe(
-        map( response => ({
-          id: response.id,
-          author: response.author,
-          value: response.value,
-          postDate: new Date(response.postDate),
-          likers: response.likers
-        }),
+        map( response => this.manageComment(response),
         )
       );
     }
@@ -30,15 +24,7 @@ export class CommentService {
     getPostComments(id: number): Observable<PostComment[]> {
       return this.http.get<PostComment[]>(`${this.apiUrlPost}/${id}/comments`).pipe(
         map( responses => 
-          responses.map(response => (
-            {
-              id: response.id,
-              author: response.author,
-              value: response.value,
-              postDate: new Date(response.postDate),
-              likers: response.likers
-            }
-          )),
+          responses.map(response => this.manageComment(response)),
         )
       );
     }
@@ -48,7 +34,10 @@ export class CommentService {
     }
 
     postComment(id : number, value : string): Observable<PostComment> {
-      return this.http.post<PostComment>(`${this.apiUrlPost}/${id}/comments/value`, value)
+      return this.http.post<PostComment>(`${this.apiUrlPost}/${id}/comments/value`, value).pipe(
+        map( response => this.manageComment(response),
+        )
+      );
     }
 
     putComment(id : number, value : string): Observable<PostComment> {
@@ -57,13 +46,7 @@ export class CommentService {
 
     putLikeComment(id : number): Observable<PostComment> {
       return this.http.put<PostComment>(`${this.apiUrlComment}/${id}/like`, {}).pipe(
-        map( response => ({
-          id: response.id,
-          author: response.author,
-          value: response.value,
-          postDate: new Date(response.postDate),
-          likers: response.likers
-        }),
+        map( response => this.manageComment(response),
         )
       );
     }
@@ -71,5 +54,15 @@ export class CommentService {
     deleteComment(id : number): Observable<PostComment> {
       return this.http.delete<PostComment>(`${this.apiUrlComment}/${id}`, {})
     }
+
+    private manageComment(comment : PostComment) : PostComment {
+      return {
+          id: comment.id,
+          author: comment.author,
+          value: comment.value,
+          postDate: new Date(comment.postDate),
+          likers: comment.likers
+        }
+  }
 
 }
