@@ -1,9 +1,11 @@
-import { APP_INITIALIZER, ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { KeycloakBearerInterceptor, KeycloakService } from 'keycloak-angular';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { ErrorInterceptor } from './config/error.interceptor';
+import { PopupService } from './services/popup.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,11 +20,18 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptorsFromDi()
     ),
+    importProvidersFrom([BrowserAnimationsModule]),
     KeycloakService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: KeycloakBearerInterceptor,
       multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true,
+      deps: [PopupService]
     }
   ]
 };
