@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { CommonModule } from '@angular/common';
 import { KeycloakProfile } from 'keycloak-js';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-navbar',
@@ -47,7 +48,7 @@ export class NavbarComponent {
   }
 
   public logout() {
-    this.keycloak.logout();
+    this.keycloak.logout(environment.homePage);
   }
 
   public register() {
