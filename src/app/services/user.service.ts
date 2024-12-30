@@ -3,7 +3,7 @@ import { KeycloakService } from 'keycloak-angular';
 
 import {User} from '../entities/user.entity';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {forkJoin, map, Observable} from 'rxjs';
+import {forkJoin, map, Observable, of} from 'rxjs';
 import {environment} from '../../environments/environment';
 
 @Injectable({
@@ -20,7 +20,9 @@ export class UserService {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
-    return this.http.get<User[]>(environment.keycloakUrl + 'users', {headers});
+    return this.http.get<User[]>(environment.keycloakUrl + 'users', {headers}).pipe(
+      map(users => users.filter(user => user.username !== environment.serviceAccountUsername))
+    );
   }
 
   hasRole(userId: number, role: string): Observable<boolean> {
@@ -79,6 +81,9 @@ export class UserService {
   }
 
   getUserByUsername(username: string | null): Observable<any> {
+    if (username === environment.serviceAccountUsername) {
+      return of(null);
+    }
     const token = this.keycloakService.getToken();
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,

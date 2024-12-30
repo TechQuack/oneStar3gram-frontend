@@ -3,7 +3,7 @@ import {KeycloakService} from 'keycloak-angular';
 import {Post} from '../entities/post.entity';
 import {PostService} from '../services/post.service';
 import {PostComponent} from '../post/post.component';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {UserService} from '../services/user.service';
 
 @Component({
@@ -23,7 +23,8 @@ export class ProfileComponent implements OnInit{
   lastName : string | undefined = "";
   posts : Post[] = []
   constructor(private  keycloakService : KeycloakService, private postService : PostService,
-              private userService: UserService, private route: ActivatedRoute) {
+              private userService: UserService, private route: ActivatedRoute,
+              private router: Router) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -38,7 +39,8 @@ export class ProfileComponent implements OnInit{
 
   loadProfile(username: string | null) {
     this.userService.getUserByUsername(username).subscribe(users => {
-      if (users.length == 0) {
+      if (users == null || users.length == 0) {
+        this.router.navigate(['/']).then();
         return
       }
       let user = users[0]
