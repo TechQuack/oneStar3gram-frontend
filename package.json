@@ -22,6 +22,7 @@
     "chartjs": "^0.3.24",
     "keycloak-angular": "^16.1.0",
     "keycloak-js": "^26.0.7",
+    "ng-angular-popup": "^0.6.6",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"

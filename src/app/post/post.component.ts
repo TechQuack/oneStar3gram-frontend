@@ -3,6 +3,7 @@ import { PostService } from '../services/post.service';
 import { Post } from '../entities/post.entity';
 import { Router, RouterLink } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
+import { PopupService } from '../services/popup.service';
 
 @Component({
   selector: 'app-post',
@@ -16,7 +17,7 @@ export class PostComponent {
   @Input() post: Post | null = null;
   isAdmin: boolean = false;
 
-  constructor(private postService: PostService, private keycloakService : KeycloakService) {}
+  constructor(private postService: PostService, private keycloakService : KeycloakService, private popupService: PopupService) {}
 
   hasUserLikedPost() {
     if (!this.keycloakService.isLoggedIn()) {
@@ -38,6 +39,7 @@ export class PostComponent {
     if (this.isAdmin) {
       this.postService.deletePost(this.post!.id).subscribe(() => {
         this.post = null;
+        this.popupService.openSuccess("Post deleted")
       });
     }
   }
