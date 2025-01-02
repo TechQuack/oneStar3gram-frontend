@@ -1,9 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+$primary-color : #0B162C;
+$secondary-color : #1C2942;
+
 html, body, app-root {
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
-  background-color: #E0D7B8;
+  background-image: radial-gradient(circle at center center, #5fc2ba, $secondary-color), repeating-radial-gradient(circle at center center, #5fc2ba, $primary-color, 32px, transparent 64px, transparent 32px);
+  background-blend-mode: multiply;
+  background-color: $secondary-color;
   display: block;
 }

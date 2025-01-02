@@ -6,9 +6,12 @@
             <p>{{post.creator}}</p>
           </div>
           @if (isAdmin) {
-            <div class="admin-actions">
-              <img id="delete" src="assets/cross.svg" alt="delete post" (click)="deletePost()">
-              <img id="edit" src="assets/pencil.svg" alt="edit post" routerLink="/edit/{{post.id}}">
+            <div class="burger-actions-post">
+                <div class="admin-actions" id="admin-actions-{{post.id}}">
+                    <a (click)="deletePost()">Delete</a>
+                    <a routerLink="/edit/{{post.id}}">Edit</a>
+                </div>
+                <img src="assets/dots-horizontal.svg" alt="admin actions menu" (click)="toggle(post.id)">
             </div>
           }
         </div>

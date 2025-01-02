@@ -9,7 +9,6 @@
   </h1>
   <div id="content">
     <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
-      <h2>Post Information's</h2>
       @if (isAddingNewPost()) {
         <div class="form-line select-buttons">
           <span class="select-button"
@@ -35,7 +34,7 @@
 
       @if (!isVideo) {
         <div class="form-line text">
-          <div>
+          <div class="form-textarea">
             <label for="alt">Alternative text</label>
             <textarea id="alt" formControlName="alt"></textarea>
           </div>
@@ -43,7 +42,7 @@
       }
 
       <div class="form-line text">
-        <div>
+        <div class="form-textarea">
           <label for="description">Description</label>
           <textarea id="description" formControlName="description"></textarea>
         </div>
@@ -68,7 +67,6 @@
 
     </form>
     <div id="content-preview">
-      <h2>Preview</h2>
       @if (!mediaData) {
         <p>Please select media in order to obtain a preview</p>
       } @else if (isVideo) {
