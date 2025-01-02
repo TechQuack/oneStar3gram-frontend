@@ -2,39 +2,77 @@
     display: flex;
     align-items: center;
 }
+
+@media only screen and (max-width: 499px) {
+  .post {
+    .upper-bar {
+      width: 90%;
+      img {
+        width: 30%;
+      }
+    }
+    .post-metadata {
+      width: 150%;
+      img {
+        width: 20%;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 500px) {
+  .post {
+    .upper-bar {
+      width: 90%;
+      img {
+        width: 10%;
+      }
+    }
+    .post-metadata {
+      width: 60%;
+      img {
+        width: 20%;
+      }
+    }
+  }
+}
+
+
+
 .post {
     display: flex;
+    width: 100%;
+    height: 100%;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: #D4D4A5;
     video, img {
-        width: 30%;
+        width: 90%;
     }
 
     .description {
-        width: 30%;
+        width: 90%;
     }
 
     .upper-bar {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       justify-items: center;
-      width: 30%;
+      position: relative;
+
       img {
         cursor: pointer;
-        width: 1.5vw;
       }
       .post-profile {
         display: flex;
         grid-column-start: 2;
       }
-      .admin-actions > img {
-        height: 100%;
-      }
 
-      .admin-actions {
-        display: none;
+      .burger-actions-post {
+        position: absolute;
+        top: 0;
+        right: 0;
         margin-left: auto;
       }
     }
@@ -42,7 +80,6 @@
     .post-metadata {
         display: flex;
         flex-direction: row;
-        width: 53%;
         align-items: center;
         justify-content: center;
         margin-top: 0.2vw;
@@ -60,4 +97,56 @@
 
 .post:hover > .upper-bar > .admin-actions {
   display: flex;
+}
+
+
+#links {
+  display: none;
+  visibility: hidden;
+}
+
+.burger-actions-post a {
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+  display: block;
+}
+
+.admin-actions a {
+  padding: 14px 16px;
+}
+
+.burger-actions-post a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.burger-actions-post {
+  background-color: #333;
+  position: relative;
+  visibility: visible;
+  width: 15%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 100%;
+  }
+
+  .admin-actions {
+    display:none;
+    position: absolute;
+    top:100%;
+    background-color: #333;
+    width: 200%;
+    right: 0;
+  }
+
+  .icon {
+    display: block;
+    padding-top: 0.2rem;
+    width: 50%;
+  }
 }

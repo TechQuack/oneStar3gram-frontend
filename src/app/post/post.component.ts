@@ -44,4 +44,16 @@ export class PostComponent {
     }
   }
 
+  public toggle(id : number) {
+    var x = document.getElementById("admin-actions-" + id);
+    if(x == null) {
+      return;
+    }
+    if (x.style.display === "block") {
+      x.style.display = "none";
+    } else {
+      x.style.display = "block";
+    }
+  }
+
 }
