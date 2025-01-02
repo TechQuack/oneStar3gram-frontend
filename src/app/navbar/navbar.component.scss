@@ -1,16 +1,22 @@
+$primary-color : #0B162C;
+$secondary-color : #1C2942;
+$font-color : white;
+
 .navBar {
+  color: $font-color;
   height: 100%;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #1796A4;
+  background-color: $primary-color;
   box-sizing: border-box;
 }
 
 #appName, a {
   font-size: 120%;
   font-weight: bold;
+  cursor: pointer;
 }
 
 #appName {
@@ -24,6 +30,7 @@
   img {
     margin-left: 0.4rem;
     height: inherit;
+    cursor: pointer;
   }
 }
 
@@ -40,6 +47,7 @@
       box-sizing: border-box;
       display: flex;
       align-items: center;
+      cursor: pointer;
     }
   }
   #burger-menu {
@@ -71,7 +79,7 @@
   }
 
   #burger-menu {
-    background-color: #333;
+    background-color: $primary-color;
     position: relative;
     visibility: visible;
     width: 15%;
@@ -88,7 +96,7 @@
       display:none;
       position: absolute;
       top:100%;
-      background-color: #333;
+      background-color: $primary-color;
       width: 200%;
       right: 0;
     }
