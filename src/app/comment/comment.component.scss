@@ -1,9 +1,15 @@
+$primary-color : #0B162C;
+$secondary-color : #1C2942;
+$third-color: #3B556D;
+$font-color : white;
+
 .comment {
   width: 90%;
-  background-color: #99B8A9;
+  background-color: $third-color;
   margin: 10px auto;
   padding : 1%;
   border-radius: 5px;
+  color: $font-color;
 }
 
 .origin {
