@@ -19,8 +19,16 @@ $font-color : white;
     .post-metadata {
       width: 150%;
       img {
-        width: 20%;
+        width: 40%;
       }
+    }
+
+    video, img {
+      width: 70%;
+    }
+
+    .description {
+        width: 70%;
     }
   }
 }
@@ -28,7 +36,7 @@ $font-color : white;
 @media only screen and (min-width: 500px) {
   .post {
     .upper-bar {
-      width: 90%;
+      width: 60%;
       img {
         width: 10%;
       }
@@ -38,6 +46,13 @@ $font-color : white;
       img {
         width: 20%;
       }
+    }
+    video, img {
+      width: 60%;
+    }
+
+    .description {
+        width: 60%;
     }
   }
 }
@@ -53,13 +68,6 @@ $font-color : white;
     justify-content: center;
     background-color: $secondary-color;
     color: $font-color;
-    video, img {
-        width: 90%;
-    }
-
-    .description {
-        width: 90%;
-    }
 
     .upper-bar {
       display: grid;

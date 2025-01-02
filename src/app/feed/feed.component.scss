@@ -13,13 +13,6 @@
     }
 }
 
-@media only screen and (min-width: 500px) {
-    app-post {
-        width: 100%;
-        height: fit-content;
-    }
-}
-@media only screen and (min-width: 499px) {
     :host {
         display: flex;
         align-items: center;
@@ -29,4 +22,3 @@
         width: 70%;
         height: fit-content;
     }
-}
