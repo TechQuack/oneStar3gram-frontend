@@ -38,7 +38,7 @@ $font-color : white;
     .upper-bar {
       width: 60%;
       img {
-        width: 10%;
+        width: 20%;
       }
     }
     .post-metadata {
@@ -68,6 +68,8 @@ $font-color : white;
     justify-content: center;
     background-color: $secondary-color;
     color: $font-color;
+    padding-bottom: 1rem;
+    border-radius: 5px;
 
     .upper-bar {
       display: grid;
@@ -96,7 +98,7 @@ $font-color : white;
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        margin-top: 0.2vw;
+        padding-top: 0.8rem;
         img {
           cursor: pointer;
           width: 10%;
@@ -120,10 +122,13 @@ $font-color : white;
 }
 
 .burger-actions-post a {
+  position: relative;
+  cursor: pointer;
   color: white;
   text-decoration: none;
   font-size: 17px;
   display: block;
+  z-index: 1000;
 }
 
 .admin-actions a {
