@@ -138,7 +138,7 @@ export class DashboardComponent {
         plugins: {
           legend: {
             labels: {
-              color: 'black'
+              color: 'white'
             }
           }
         }
@@ -163,7 +163,7 @@ export class DashboardComponent {
         plugins: {
           legend: {
             labels: {
-              color: 'black'
+              color: 'white'
             }
           }
         }
@@ -189,7 +189,7 @@ export class DashboardComponent {
         plugins: {
           legend: {
             labels: {
-              color: 'black'
+              color: 'white'
             }
           }
         }
@@ -210,7 +210,7 @@ export class DashboardComponent {
         plugins: {
           legend: {
             labels: {
-              color: 'black'
+              color: 'white'
             }
           }
         }
@@ -231,7 +231,7 @@ export class DashboardComponent {
         plugins: {
           legend: {
             labels: {
-              color: 'black'
+              color: 'white'
             }
           }
         }

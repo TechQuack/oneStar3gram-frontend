@@ -1,3 +1,8 @@
+$primary-color : #0B162C;
+$secondary-color : #1C2942;
+$third-color: #3B556D;
+$font-color : white;
+
 @media only screen and (min-width: 700px) {
     .dashboard {
         height: 100%;
@@ -63,7 +68,8 @@
 }
 
 .box {
-    background-color: #72A1B4;
+    background-color: $secondary-color;
+    color: $font-color;
     border-radius: 10%;
     padding: 1rem;
     position: relative;
@@ -112,5 +118,5 @@
 }
 
 canvas {
-    color: black;
+    color: $font-color;
 }
