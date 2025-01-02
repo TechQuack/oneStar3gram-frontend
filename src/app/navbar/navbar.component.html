@@ -3,7 +3,7 @@
     <img src="assets/logo.svg" alt="logo"/>
     <p id="appName">OneStar3gram</p>
   </div>
-  <div id="profile">
+  <div id="links">
     @if (!isLogged) {
       <a href="/login" class="navigation-button" (click)="login()">Login</a>
       <a href="/register" class="navigation-button" (click)="register()">Register</a>
@@ -17,5 +17,25 @@
       <img src="assets/profile.svg" class="navigation-button" alt="profile" [routerLink]="['/profile', username]"/>
       <img src="assets/disconnect.svg" class="navigation-button" alt="disconnect" (click)="logout()"/>
     }
+  </div>
+  <div id="burger-menu">
+    <div id="burger-links">
+      @if (!isLogged) {
+        <a href="/login" (click)="login()">Login</a>
+        <a href="/register" (click)="register()">Register</a>
+      } @else {
+        @if (isAdmin) {
+          @if(!isOnPage("/add")) {
+            <a routerLink="/add" (click)="toggle()">Add content</a>
+          }
+          <a routerLink="/dashboard" (click)="toggle()">Dashboard</a>
+        }
+        <a [routerLink]="['/profile', username]" (click)="toggle()">Profile</a>
+        <a (click)="logout()">Disconnect</a>
+      }
+    </div>
+    <a class="icon" (click)="toggle()">
+      <img src="assets/burger-menu.svg">
+    </a>
   </div>
 </div>

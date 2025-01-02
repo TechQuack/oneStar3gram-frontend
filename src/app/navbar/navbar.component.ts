@@ -54,4 +54,16 @@ export class NavbarComponent {
   public register() {
     this.keycloak.register();
   }
+
+  public toggle() {
+    var x = document.getElementById("burger-links");
+    if(x == null) {
+      return;
+    }
+    if (x.style.display === "block") {
+      x.style.display = "none";
+    } else {
+      x.style.display = "block";
+    }
+  }
 }
