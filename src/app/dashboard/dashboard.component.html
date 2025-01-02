@@ -18,17 +18,11 @@
     <canvas id="UserStat"></canvas>
   </div>
   <div class="image-box box">
-    @if (images.length == 0) {
-      <b class="no-data">No data</b>
-    }
     <canvas id="ImageStat"></canvas>
     <p>Mean size of an image : {{getImageMeanSize()}} KB</p>
     <p>Space taken by all images : {{sumArray(imagesSize)}} KB</p>
   </div>
   <div class="video-box box">
-    @if (videos.length == 0) {
-      <b class="no-data">No data</b>
-    }
     <canvas id="VideoStat"></canvas>
     <p>Mean size of a video : {{getVideoMeanSize()}} KB</p>
     <p>Space taken by all videos : {{sumArray(videosSize)}} KB</p>
