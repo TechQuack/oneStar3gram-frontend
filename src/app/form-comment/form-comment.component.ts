@@ -24,8 +24,9 @@ export class FormCommentComponent {
 
   submit() {
     this.commentService.postComment(this.idPost, this.commentForm.value.value).subscribe(c => {
-      this.newComment.emit(c)
-      this.popupService.openSuccess("Comment added")
+      this.newComment.emit(c);
+      this.popupService.openSuccess("Comment added");
+      this.commentForm.reset();
     });
   }
 }
