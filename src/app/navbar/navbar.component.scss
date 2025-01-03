@@ -2,6 +2,13 @@ $primary-color : #0B162C;
 $secondary-color : #1C2942;
 $font-color : white;
 
+@font-face {
+  font-family: Magneto;
+  src: url("/assets/fonts/Magneto/magneto_bold.ttf") format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+
 .navBar {
   color: $font-color;
   height: 100%;
@@ -21,7 +28,7 @@ $font-color : white;
 }
 
 #appName {
-  font-family: "Magneto", serif;
+  font-family: Magneto, serif;
 }
 
 #navigation {
