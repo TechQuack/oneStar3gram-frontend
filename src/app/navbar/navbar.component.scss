@@ -2,6 +2,13 @@ $primary-color : #0B162C;
 $secondary-color : #1C2942;
 $font-color : white;
 
+@font-face {
+  font-family: Magneto;
+  src: url("/assets/fonts/Magneto/magneto_bold.ttf") format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+
 .navBar {
   color: $font-color;
   height: 100%;
@@ -17,21 +24,23 @@ $font-color : white;
   font-size: 120%;
   font-weight: bold;
   cursor: pointer;
+  color: $font-color;
 }
 
 #appName {
-  font-family: "Magneto", serif;
+  font-family: Magneto, serif;
 }
 
 #navigation {
   width: 50%;
   height: 100%;
   display: flex;
+  align-items: center;
   img {
     margin-left: 0.4rem;
     height: inherit;
     cursor: pointer;
-    padding: 0.4rem;
+    padding: 0.5rem;
     box-sizing: border-box;
   }
 }
@@ -44,8 +53,8 @@ $font-color : white;
     align-items: center;
     justify-content: end;
     img, a {
-      height: inherit;
-      padding: 0.4rem;
+      height: 100%;
+      padding: 0.5rem;
       box-sizing: border-box;
       display: flex;
       align-items: center;
@@ -63,7 +72,7 @@ $font-color : white;
     display: none;
     visibility: hidden;
   }
-  
+
   #burger-menu a {
     color: white;
     text-decoration: none;
@@ -74,7 +83,7 @@ $font-color : white;
   #burger-links a {
     padding: 14px 16px;
   }
-  
+
   #burger-menu a:hover {
     background-color: #ddd;
     color: black;

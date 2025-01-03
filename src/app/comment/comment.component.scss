@@ -60,7 +60,6 @@ div.date {
   a {
     display: flex;
     justify-content: center;
-    background-color: none;
     margin: 2px;
     cursor: pointer;
   }
@@ -71,7 +70,9 @@ div.date {
     align-items: center;
     justify-content: start;
     width: 100%;
-    cursor: pointer;
+    .clickable {
+      cursor: pointer;
+    }
   }
 
   .delete {

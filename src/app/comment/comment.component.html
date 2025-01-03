@@ -18,10 +18,14 @@
       </div>
       <div class="icon">
         <div class="likes">
-          @if(hasUserLikedComment()) {
-              <img src="assets/full_like.svg" (click)="likeComment()">
+          @if (isLoggedIn) {
+            @if(hasUserLikedComment()) {
+              <img src="assets/full_like.svg" class="clickable" alt="liked" (click)="likeComment()">
+            } @else {
+              <img src="assets/like.svg" class="clickable" alt="like" (click)="likeComment()">
+            }
           } @else {
-              <img src="assets/like.svg" (click)="likeComment()">
+            <img src="assets/like.svg" alt="like">
           }
           {{comment.likers.length}}
         </div>
