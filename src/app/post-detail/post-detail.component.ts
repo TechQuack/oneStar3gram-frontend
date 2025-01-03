@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PostService } from '../services/post.service';
 import { Post } from '../entities/post.entity';
 import { PostComment } from '../entities/comment.entity';
+import {KeycloakService} from 'keycloak-angular';
 
 @Component({
   selector: 'app-post-detail',
@@ -17,15 +18,17 @@ import { PostComment } from '../entities/comment.entity';
 export class PostDetailComponent {
   private route = inject(ActivatedRoute);
 
-  post: Post | null = null
+  post: Post | null = null;
+  isLogged: boolean = false;
 
-  constructor(private postService: PostService){}
+  constructor(private postService: PostService, private keycloakService: KeycloakService){}
 
   async ngOnInit() {
+    this.isLogged = this.keycloakService.isLoggedIn();
     this.route.params.subscribe(params => {
        var id = +params['id'];
        this.postService.getPost(id).subscribe(post => this.post = post)
-    }); 
+    });
   }
 
   addNewComment(comment: PostComment) {
