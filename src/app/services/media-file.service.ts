@@ -30,7 +30,7 @@ export abstract class MediaFileService {
     }
 
     downloadMedia(id: number): Observable<Blob> {
-        return this.http.get<Blob>(`${this.apiUrl}/download/${id}`);
+        return this.http.get(`${this.apiUrl}/download/${id}`, {responseType: 'blob'});
     }
 
     protected abstract getApiUrl() : string

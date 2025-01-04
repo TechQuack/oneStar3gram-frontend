@@ -31,6 +31,17 @@ export class UserService {
     );
   }
 
+  deleteUser(userId: number) {
+    const token = this.keycloakService.getToken();
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    const deleteUrl = environment.keycloakUrl + 'users/'
+      + userId
+    return this.http.delete(deleteUrl, {headers})
+  }
+
   changeRole(userId: number, role: string): Observable<object> {
     this.removeRoles(userId, role)
     return new Observable(observer => {
