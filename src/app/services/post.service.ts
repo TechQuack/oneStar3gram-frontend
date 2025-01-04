@@ -37,13 +37,7 @@ export class PostService {
     }
 
   getUserPosts(username: string): Observable<Post[]> {
-    const token = this.keycloakService.getToken();
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-
-    return this.http.get<Post[]>(`${this.apiUrl}/author/${username}`, {headers}).pipe(
+    return this.http.get<Post[]>(`${this.apiUrl}/author/${username}`).pipe(
       map(response =>
         response.map(
           response => {

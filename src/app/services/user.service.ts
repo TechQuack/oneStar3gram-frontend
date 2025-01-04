@@ -14,13 +14,7 @@ export class UserService {
   constructor(private http: HttpClient, private keycloakService: KeycloakService) {}
 
   getUsers(): Observable<User[]> {
-    const token =  this.keycloakService.getToken();
-
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.get<User[]>(environment.keycloakUrl + 'users', {headers}).pipe(
+    return this.http.get<User[]>(environment.keycloakUrl + 'users').pipe(
       map(users => users.filter(user => user.username !== environment.serviceAccountUsername))
     );
   }
@@ -32,31 +26,21 @@ export class UserService {
   }
 
   deleteUser(userId: number) {
-    const token = this.keycloakService.getToken();
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
     const deleteUrl = environment.keycloakUrl + 'users/'
       + userId
-    return this.http.delete(deleteUrl, {headers})
+    return this.http.delete(deleteUrl)
   }
 
   changeRole(userId: number, role: string): Observable<object> {
     this.removeRoles(userId, role)
     return new Observable(observer => {
-      const token = this.keycloakService.getToken();
-      const headers = new HttpHeaders({
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      });
       const roleUrl = environment.keycloakUrl + 'users/'
         + userId + '/role-mappings/realm'
       if (role !== 'None') {
         this.getRoleByName(role).subscribe({
           next: (newRole: object) => {
             const rolePayload = [newRole];
-            this.http.post(roleUrl, rolePayload, {headers}).subscribe({
+            this.http.post(roleUrl, rolePayload).subscribe({
               next: response => {
                 observer.next(response);
                 observer.complete();
@@ -69,15 +53,9 @@ export class UserService {
   }
 
   getUserRole(userId: number): Observable<string> {
-      const token = this.keycloakService.getToken();
-      const headers = new HttpHeaders({
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      });
-
       const roleUrl = environment.keycloakUrl + 'users/'
         + userId + '/role-mappings/realm'
-      return this.http.get<any[]>(roleUrl, { headers }).pipe(
+      return this.http.get<any[]>(roleUrl).pipe(
         map(roles => {
           const roleNames = roles.map(role => role.name)
           if (roleNames.includes('Admin')) {
@@ -95,23 +73,13 @@ export class UserService {
     if (username === environment.serviceAccountUsername) {
       return of(null);
     }
-    const token = this.keycloakService.getToken();
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
     const url  =environment.keycloakUrl + 'users?username=' + username
-    return this.http.get(url, { headers });
+    return this.http.get(url);
   }
 
   private getRoleByName(roleName: string): Observable<object> {
     const url = environment.keycloakUrl + 'roles/' + roleName;
-    const token = this.keycloakService.getToken();
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.get(url, { headers });
+    return this.http.get(url);
   }
 
   private removeRoles(userId: number, role: string): void {
@@ -121,13 +89,7 @@ export class UserService {
       next: (rolesToRemove: any[]) => {
         const roleUrl = environment.keycloakUrl + 'users/'
           + userId + '/role-mappings/realm'
-
-        const token = this.keycloakService.getToken();
-        const headers = new HttpHeaders({
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        });
-        this.http.delete(roleUrl, {headers, body: rolesToRemove}).subscribe()
+        this.http.delete(roleUrl, {body: rolesToRemove}).subscribe()
       }
     })
   }
