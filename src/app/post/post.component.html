@@ -10,6 +10,7 @@
                 <div class="admin-actions" id="admin-actions-{{post.id}}">
                     <a (click)="deletePost()">Delete</a>
                     <a routerLink="/edit/{{post.id}}">Edit</a>
+                    <a (click)="downloadMedia()">Download</a>
                 </div>
                 <img src="assets/dots-horizontal.svg" alt="admin actions menu" (click)="toggle(post.id)">
             </div>
