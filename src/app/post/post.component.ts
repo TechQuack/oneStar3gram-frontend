@@ -18,6 +18,7 @@ export class PostComponent {
 
   @Input() post: Post | null = null;
   isAdmin: boolean = false;
+  @Input() isDetail: boolean = false;
 
   constructor(private postService: PostService, private keycloakService :
     KeycloakService, private popupService: PopupService, private imageService: ImageService,

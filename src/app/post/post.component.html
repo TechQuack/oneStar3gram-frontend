@@ -1,10 +1,18 @@
 @if(post != null) {
     <div class="post">
         <div class="upper-bar">
-          <div class="post-profile" [routerLink]="['/post', post.id]">
-            <img src="assets/profile.svg" alt="profile">
-            <p>{{post.creator}}</p>
-          </div>
+          @if (isDetail) {
+            <div class="post-profile" [routerLink]="['/profile', post.creator]">
+              <img src="assets/profile.svg" alt="profile">
+              <p class="creator">{{post.creator}}</p>
+            </div>
+          } @else {
+            <div class="post-profile" [routerLink]="['/post', post.id]">
+              <img src="assets/profile.svg" alt="profile">
+              <p class="creator">{{post.creator}}</p>
+            </div>
+          }
+
           @if (isAdmin) {
             <div class="burger-actions-post">
                 <div class="admin-actions" id="admin-actions-{{post.id}}">
