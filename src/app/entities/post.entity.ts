@@ -6,7 +6,7 @@ export interface Post {
     creator: string;
     postDate: Date;
     description: string;
-    isPrivate: boolean;
+    private: boolean;
     likers: string[];
     comments: PostComment[];
     media: MediaFile;

@@ -50,11 +50,11 @@
 
       <div class="form-line select-buttons">
         <span class="select-button"
-              [ngClass]="{'pressed': isPrivate, 'unpressed': !isPrivate}"
-              (click)="!isPrivate && setVisibility(true)">Private</span>
+              [ngClass]="{'pressed': private, 'unpressed': !private}"
+              (click)="!private && setVisibility(true)">Private</span>
         <span class="select-button"
-              [ngClass]="{'pressed': !isPrivate, 'unpressed': isPrivate}"
-              (click)="isPrivate && setVisibility(false)">Public</span>
+              [ngClass]="{'pressed': !private, 'unpressed': private}"
+              (click)="private && setVisibility(false)">Public</span>
       </div>
 
       <div id="submit-line">
