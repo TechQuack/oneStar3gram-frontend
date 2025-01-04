@@ -3,7 +3,7 @@
         <div class="upper-bar">
           <div class="post-profile" [routerLink]="['/post', post.id]">
             <img src="assets/profile.svg" alt="profile">
-            <p>{{post.creator}}</p>
+            <p id="creator" [routerLink]="['/profile', post.creator]">{{post.creator}}</p>
           </div>
           @if (isAdmin) {
             <div class="burger-actions-post">
