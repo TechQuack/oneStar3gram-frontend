@@ -1,0 +1,38 @@
+@if(comment != null) {
+  <div class="comment">
+    <div class="header">
+      <div class="origin">
+        <span class="author">
+          <img src="assets/profile.svg" alt="Profile picture" class="profile-link" [routerLink]="['/profile', comment.author]"/>
+          <p>{{comment.author}}</p>
+        </span>
+        <span class="date">
+          Published on :
+          {{comment.postDate.getDate()}}/{{comment.postDate.getMonth() + 1}}/{{comment.postDate.getFullYear()}} {{comment.postDate.getHours()}}:{{comment.postDate.getMinutes()}}
+        </span>
+      </div>
+    </div>
+    <div class="body">
+      <div class="content">
+        {{comment.value}}
+      </div>
+      <div class="icon">
+        <div class="likes">
+          @if (isLoggedIn) {
+            @if(hasUserLikedComment()) {
+              <img src="assets/full_like.svg" class="clickable" alt="liked" (click)="likeComment()">
+            } @else {
+              <img src="assets/like.svg" class="clickable" alt="like" (click)="likeComment()">
+            }
+          } @else {
+            <img src="assets/like.svg" alt="like">
+          }
+          {{comment.likers.length}}
+        </div>
+        @if(canDeleteComment()) {
+          <a (click)="removeComment()" class="delete"><img src="assets/cross.svg" alt="Delete button"/></a>
+        }
+      </div>
+    </div>
+  </div>
+}

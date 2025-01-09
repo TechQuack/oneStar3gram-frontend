@@ -1,0 +1,49 @@
+@if(post != null) {
+    <div class="post">
+        <div class="upper-bar">
+          @if (isDetail) {
+            <div class="post-profile" [routerLink]="['/profile', post.creator]">
+              <img src="assets/profile.svg" alt="profile">
+              <p class="creator">{{post.creator}}</p>
+            </div>
+          } @else {
+            <div class="post-profile" [routerLink]="['/post', post.id]">
+              <img src="assets/profile.svg" alt="profile">
+              <p class="creator">{{post.creator}}</p>
+            </div>
+          }
+
+          @if (isAdmin) {
+            <div class="burger-actions-post">
+                <div class="admin-actions" id="admin-actions-{{post.id}}">
+                    <a (click)="deletePost()">Delete</a>
+                    <a routerLink="/edit/{{post.id}}">Edit</a>
+                    <a (click)="downloadMedia()">Download</a>
+                </div>
+                <img src="assets/dots-horizontal.svg" alt="admin actions menu" (click)="toggle(post.id)">
+            </div>
+          }
+        </div>
+        @if(post.media.video) {
+            <video controls src="https://proxy-onestar3gram:8081/uploads/{{post.media.generatedName}}"></video>
+        }
+        @else {
+            <img src="https://proxy-onestar3gram:8081/uploads/{{post.media.generatedName}}" alt="{{post.alt}}"/>
+        }
+        <div class="post-metadata">
+            <div class="likes">
+                @if(hasUserLikedPost()) {
+                    <img src="assets/full_like.svg" (click)="likePost()">
+                } @else {
+                    <img src="assets/like.svg" (click)="likePost()">
+                }
+                {{post.likers.length}}
+            </div>
+            <div class="comments" [routerLink]="['/post', post.id]">
+                <img src="assets/comment.svg" alt="comments">
+                {{post.comments.length}}
+            </div>
+        </div>
+        <span class="description">{{post.description}}</span>
+    </div>
+}

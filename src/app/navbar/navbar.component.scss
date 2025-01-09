@@ -1,0 +1,121 @@
+$primary-color : #0B162C;
+$secondary-color : #1C2942;
+$font-color : white;
+
+@font-face {
+  font-family: Magneto;
+  src: url("/assets/fonts/Magneto/magneto_bold.ttf") format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+.navBar {
+  color: $font-color;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $primary-color;
+  box-sizing: border-box;
+}
+
+#appName, a {
+  font-size: 120%;
+  font-weight: bold;
+  cursor: pointer;
+  color: $font-color;
+}
+
+#appName {
+  font-family: Magneto, serif;
+}
+
+#navigation {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  img {
+    margin-left: 0.4rem;
+    height: inherit;
+    cursor: pointer;
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
+}
+
+@media only screen and (min-width: 500px) {
+  #links {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    img, a {
+      height: 100%;
+      padding: 0.5rem;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+  }
+  #burger-menu {
+    display: none;
+    visibility: hidden;
+  }
+}
+
+@media only screen and (max-width: 499px) {
+  #links {
+    display: none;
+    visibility: hidden;
+  }
+
+  #burger-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+    display: block;
+  }
+
+  #burger-links a {
+    padding: 14px 16px;
+  }
+
+  #burger-menu a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  #burger-menu {
+    background-color: $primary-color;
+    position: relative;
+    visibility: visible;
+    width: 15%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 100%;
+    }
+
+    #burger-links {
+      display:none;
+      position: absolute;
+      top:100%;
+      background-color: $primary-color;
+      width: 200%;
+      right: 0;
+    }
+
+    .icon {
+      display: block;
+      padding-top: 0.2rem;
+      width: 50%;
+    }
+  }
+}

@@ -1,0 +1,40 @@
+<div class="profile">
+  <div class="header">
+    <h1>{{username}}</h1>
+    <div class="resume">
+      <div class="logo">
+        <img src="assets/profile.svg" alt="profile"/>
+      </div>
+      <div class="nbPosts">
+        <p>
+          <span class="count">{{posts.length}}</span>
+          <br/>
+          <span class="label">posts</span>
+        </p>
+      </div>
+    </div>
+</div>
+  <div class="container">
+    <div class="info block">
+      <div>
+        <p class="name">{{firstName}} {{lastName}}</p>
+      </div>
+      <div class="contact">
+        <p>Contact: <a href="mailto:{{email}}">{{email}}</a></p>
+      </div>
+    </div>
+    <div class="update block">
+      <form action="https://proxy-onestar3gram:8080/realms/OneStar3gram/account" method="GET">
+        <input type="hidden" name="referrer" value="onestar3gram-frontend" />
+        <input type="hidden" name="referrer_uri" value="https://proxy-onestar3gram/profile" />
+        <input type="hidden" name="redirect_uri" value="https://proxy-onestar3gram/profile" />
+        <input type="submit" value="Update profile">
+      </form>
+    </div>
+  </div>
+  <div class="posts">
+    @for(post of posts; track $index) {
+      <app-post [post]="post"></app-post>
+    }
+  </div>
+</div>

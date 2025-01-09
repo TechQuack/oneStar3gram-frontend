@@ -1,0 +1,7 @@
+<app-post [post]="post" [isDetail]="true"></app-post>
+<div id="comment">
+  @if (isLogged) {
+    <app-form-comment [idPost]="post?.id ?? 0" (newComment)="addNewComment($event)"></app-form-comment>
+  }
+  <app-list-comment [comments]="post?.comments ?? []"></app-list-comment>
+</div>

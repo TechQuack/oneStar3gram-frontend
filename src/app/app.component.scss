@@ -1,0 +1,15 @@
+app-navbar {
+  height: 7%;
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+  top: 0;
+}
+
+.content {
+  height: 93%;
+  position: fixed;
+  overflow: auto;
+  bottom: 0;
+  width: 100%;
+}

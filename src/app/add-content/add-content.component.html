@@ -1,0 +1,79 @@
+<div id="content-page">
+  <h1>
+    @if (isAddingNewPost()) {
+      Add
+    } @else {
+      Edit
+    }
+    a post
+  </h1>
+  <div id="content">
+    <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+      @if (isAddingNewPost()) {
+        <div class="form-line select-buttons">
+          <span class="select-button"
+                [ngClass]="{'pressed': !isVideo, 'unpressed': isVideo}"
+                (click)="isVideo && setMediaType(false)">Image</span>
+          <span class="select-button"
+                [ngClass]="{'pressed': isVideo, 'unpressed': !isVideo}"
+                (click)="!isVideo && setMediaType(true)">Video</span>
+        </div>
+
+        <div class="form-line file">
+          <label>Select
+            @if (isVideo) {
+              Video file
+              <input type="file" id="media" formControlName="media" accept="video/*"  (change)="onPickedMedia($event)">
+            } @else {
+              image file
+              <input type="file" formControlName="media" accept="image/*" (change)="onPickedMedia($event)">
+            }
+          </label>
+        </div>
+      }
+
+      @if (!isVideo) {
+        <div class="form-line text">
+          <div class="form-textarea">
+            <label for="alt">Alternative text</label>
+            <textarea id="alt" formControlName="alt"></textarea>
+          </div>
+        </div>
+      }
+
+      <div class="form-line text">
+        <div class="form-textarea">
+          <label for="description">Description</label>
+          <textarea id="description" formControlName="description"></textarea>
+        </div>
+      </div>
+
+      <div class="form-line select-buttons">
+        <span class="select-button"
+              [ngClass]="{'pressed': private, 'unpressed': !private}"
+              (click)="!private && setVisibility(true)">Private</span>
+        <span class="select-button"
+              [ngClass]="{'pressed': !private, 'unpressed': private}"
+              (click)="private && setVisibility(false)">Public</span>
+      </div>
+
+      <div id="submit-line">
+        @if (postForm.valid || !isAddingNewPost()) {
+          <input type="submit" [value]="submitValue">
+        } @else {
+          <input type="submit" [value]="submitValue" disabled>
+        }
+      </div>
+
+    </form>
+    <div id="content-preview">
+      @if (!mediaData) {
+        <p>Please select media in order to obtain a preview</p>
+      } @else if (isVideo) {
+        <video controls [src]="mediaData"></video>
+      } @else {
+        <img [src]="mediaData" alt="{{postForm.controls['alt'].value}}">
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+$primary-color : #0B162C;
+$secondary-color : #1C2942;
+$third-color: #3B556D;
+$font-color : white;
+
+.comment {
+  width: 90%;
+  background-color: $third-color;
+  margin: 10px auto;
+  padding : 1%;
+  border-radius: 5px;
+  color: $font-color;
+}
+
+.origin {
+  display: flex;
+  align-items: center;
+  height: 2.1rem;
+}
+
+.author {
+  font-weight: bold;
+  display: flex;
+
+  img {
+    margin-right: 2px;
+  }
+}
+
+div.date {
+  text-align: left !important;
+}
+
+.origin {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #E0D7B8;
+}
+
+.content {
+  padding-top: 5px;
+}
+
+.date {
+  font-style: italic;
+}
+
+.body {
+  display: flex;
+}
+
+.content {
+  width: 70%;
+}
+
+.icon {
+  display: flex;
+  justify-content: end;
+  width: 30%;
+  a {
+    display: flex;
+    justify-content: center;
+    margin: 2px;
+    cursor: pointer;
+  }
+
+  .likes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    .clickable {
+      cursor: pointer;
+    }
+  }
+
+  .delete {
+    justify-content: end;
+  }
+}
+
+img {
+  width: 40px;
+}
+
+.profile-link {
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+profile-link:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
