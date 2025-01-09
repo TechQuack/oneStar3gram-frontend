@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Post } from '../entities/post.entity';
 import { environment } from '../../environments/environment';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { PostComment } from '../entities/comment.entity';
-import {KeycloakService} from 'keycloak-angular';
+import { KeycloakService } from 'keycloak-angular';
 
 @Injectable({
     providedIn: 'root'
@@ -37,13 +37,7 @@ export class PostService {
     }
 
   getUserPosts(username: string): Observable<Post[]> {
-    const token = this.keycloakService.getToken();
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-
-    return this.http.get<Post[]>(`${this.apiUrl}/author/${username}`, {headers}).pipe(
+    return this.http.get<Post[]>(`${this.apiUrl}/author/${username}`).pipe(
       map(response =>
         response.map(
           response => {
@@ -59,11 +53,11 @@ export class PostService {
       return this.http.get<Post[]>(`${this.apiUrl}/self`);
     }
 
-    editPost(postId: number, alt: string | null, description: string | null, visibility: boolean | null): Observable<Post> {
+    editPost(postId: number, alt: string | null, description: string | null, private_: boolean | null): Observable<Post> {
       const body = {
         alt: alt,
         description: description,
-        visibility: visibility
+        private: private_
       }
       return this.http.put<Post>(`${this.apiUrl}/${postId}`, body).pipe(
         map(response => {
@@ -73,12 +67,12 @@ export class PostService {
       );
     }
 
-    sendPost(mediaId: number, alt: string, description: string, visibility: boolean): Observable<number> {
+    sendPost(mediaId: number, alt: string, description: string, private_: boolean): Observable<number> {
         const body = {
           mediaId: mediaId,
           alt: alt,
           description: description,
-          visibility: visibility
+          private: private_
         }
         return this.http.post<number>(`${this.apiUrl}`, body);
     }

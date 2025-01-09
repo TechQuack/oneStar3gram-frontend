@@ -28,7 +28,7 @@ export class AddContentComponent {
   id: number = 0;
   mediaData?: string | ArrayBuffer | null;
   isVideo: boolean = false;
-  isPrivate: boolean = true;
+  private: boolean = true;
   submitValue: string = "Send post";
 
   constructor(private imageService: ImageService,
@@ -51,7 +51,7 @@ export class AddContentComponent {
           this.isVideo = post.media.video;
           this.postForm.controls['alt'].setValue(post.alt);
           this.postForm.controls['description'].setValue(post.description);
-          this.isPrivate = post.isPrivate;
+          this.private = post.private;
           this.mediaData = `https://proxy-onestar3gram:8081/uploads/${post.media.generatedName}`;
           this.submitValue = "Update post";
         })
@@ -82,8 +82,8 @@ export class AddContentComponent {
     this.isVideo = isVideo;
   }
 
-  setVisibility(isPrivate: boolean) {
-    this.isPrivate = isPrivate;
+  setVisibility(private_: boolean) {
+    this.private = private_;
   }
 
   onSubmit() {
@@ -96,21 +96,21 @@ export class AddContentComponent {
     if (this.isAddingNewPost()) {
       if (this.isVideo) {
         this.videoService.createMedia(media).subscribe(mediaFile => {
-          this.postService.sendPost(mediaFile.id, alt, description, this.isPrivate).subscribe(() => {
+          this.postService.sendPost(mediaFile.id, alt, description, this.private).subscribe(() => {
             this.router.navigate([""]);
             this.popupService.openSuccess("Post created")
           });
         });
       } else {
         this.imageService.createMedia(media).subscribe(mediaFile => {
-          this.postService.sendPost(mediaFile.id, alt, description, this.isPrivate).subscribe(() => {
+          this.postService.sendPost(mediaFile.id, alt, description, this.private).subscribe(() => {
             this.router.navigate([""]);
             this.popupService.openSuccess("Post created")
           });
         });
       }
     } else {
-      this.postService.editPost(this.id, alt, description, this.isPrivate).subscribe(() => {
+      this.postService.editPost(this.id, alt, description, this.private).subscribe(() => {
         this.router.navigate([""]);
         this.popupService.openSuccess("Post edited")
       });

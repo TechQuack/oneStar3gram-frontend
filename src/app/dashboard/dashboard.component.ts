@@ -56,7 +56,7 @@ export class DashboardComponent {
   getPosts() {
     this.postService.getPosts().subscribe(posts => {
       this.posts = posts
-      var numberOfPrivatePosts = posts.filter(post => post.isPrivate).length
+      var numberOfPrivatePosts = posts.filter(post => post.private).length
       this.postChart!.data.datasets[0].data[0] = posts.length - numberOfPrivatePosts
       this.postChart!.data.datasets[0].data[1] = numberOfPrivatePosts
       this.postChart?.update()
@@ -268,7 +268,6 @@ export class DashboardComponent {
   }
 
   getRandomColor(count: number): string[] {
-    var arr = [];
     var colors: string[] = []
     for (var i = 0; i < count; i++) {
       var letters = '0123456789ABCDEF'.split('');
@@ -279,7 +278,7 @@ export class DashboardComponent {
       colors.push(color);
     }
     return colors;
-  } 
+  }
 
   getImageMeanSize(): number {
     if (this.imagesSize.length == 0) {

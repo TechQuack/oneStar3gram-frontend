@@ -10,8 +10,7 @@ import {UserService} from '../services/user.service';
   selector: 'app-profile',
   standalone: true,
   imports: [
-    PostComponent,
-    RouterLink
+    PostComponent
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
@@ -22,8 +21,9 @@ export class ProfileComponent implements OnInit{
   firstName : string | undefined = "";
   lastName : string | undefined = "";
   posts : Post[] = []
-  constructor(private  keycloakService : KeycloakService, private postService : PostService,
-              private userService: UserService, private route: ActivatedRoute,
+  constructor(private postService : PostService,
+              private userService: UserService, 
+              private route: ActivatedRoute,
               private router: Router) {
   }
 

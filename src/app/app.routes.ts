@@ -8,8 +8,8 @@ import {ProfileComponent} from './profile/profile.component';
 
 export const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'add', component: AddContentComponent},
-  {path: 'edit/:id', component: AddContentComponent},
+  {path: 'add', component: AddContentComponent, canActivate: [AuthGuard], data: {roles: ['Admin']}},
+  {path: 'edit/:id', component: AddContentComponent, canActivate: [AuthGuard], data: {roles: ['Admin']}},
   {path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: {roles: ['Admin']}},
   {path: 'post/:id', component: PostDetailComponent}
